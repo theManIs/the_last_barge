@@ -36,11 +36,11 @@ public class OceanAdvanced : MonoBehaviour
   const int NB_INTERACTIONS = 64;
   static Wave[] waves =
   {
-    new Wave(99, 100, 1.4f, 0.9f, new Vector2( 1.0f * 55f,  0.2f * -100f)),
-    new Wave(60, 1.2f, 0.8f, 0.5f, new Vector2( 1.0f * 55f,  3.0f * -100f)),
-    new Wave(20, 3.5f, 0.4f, 0.8f, new Vector2( 2.0f * 55f,  4.0f * -100f)),
-    new Wave(30, 2.0f, 0.4f, 0.4f, new Vector2(-1.0f * 55f,  0.0f * -100f)),
-    new Wave(10, 3.0f, 0.05f, -100,new Vector2(-1.0f * 55f,  1.2f * -100f))
+      new Wave(99, 1.0f, 1.4f, 0.9f, new Vector2(1.0f,  0.2f)),
+      new Wave(60, 1.2f, 0.8f, 0.5f, new Vector2(1.0f,  3.0f)),
+      new Wave(20, 3.5f, 0.4f, 0.8f, new Vector2(2.0f,  4.0f)),
+      new Wave(30, 2.0f, 0.4f, 0.4f, new Vector2(-1.0f, 0.0f)),
+      new Wave(10, 3.0f, 0.05f, 0.9f,new Vector2(-1.0f, 1.2f))
   };
 
   void Awake()
