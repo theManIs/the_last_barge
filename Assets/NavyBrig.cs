@@ -25,6 +25,8 @@ public class NavyBrig : MonoBehaviour
            _rb.velocity = transform.forward * Velocity;
            _rb.useGravity = false;
         }
+
+        _rb = GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
@@ -41,7 +43,7 @@ public class NavyBrig : MonoBehaviour
     }
 
 
-    private void OnTriggerEnter()   
+    private void OnTriggerEnter() 
     {
         Debug.Log(Math.Round(Random.value * 50));
         if (Math.Round(Random.value * 50) == 5)
