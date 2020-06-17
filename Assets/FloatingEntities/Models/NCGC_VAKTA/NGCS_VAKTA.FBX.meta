@@ -1,34 +1,149 @@
 fileFormatVersion: 2
-guid: c265270d722f3ce4e923671510618797
+guid: 21a099015a7b0c041be3c427de2df6ff
 ModelImporter:
   serializedVersion: 19300
   internalIDToNameTable:
   - first:
       1: 100000
+    second: cabin
+  - first:
+      1: 100002
     second: //RootNode
+  - first:
+      1: 100004
+    second: floor
+  - first:
+      1: 100006
+    second: glass
+  - first:
+      1: 100008
+    second: H_splash_emitter
+  - first:
+      1: 100010
+    second: H_splash_trigger
+  - first:
+      1: 100012
+    second: H_wake
+  - first:
+      1: 100014
+    second: inside
+  - first:
+      1: 100016
+    second: props
+  - first:
+      1: 100018
+    second: safety
+  - first:
+      1: 100020
+    second: safety_inside
   - first:
       4: 400000
+    second: cabin
+  - first:
+      4: 400002
     second: //RootNode
+  - first:
+      4: 400004
+    second: floor
+  - first:
+      4: 400006
+    second: glass
+  - first:
+      4: 400008
+    second: H_splash_emitter
+  - first:
+      4: 400010
+    second: H_splash_trigger
+  - first:
+      4: 400012
+    second: H_wake
+  - first:
+      4: 400014
+    second: inside
+  - first:
+      4: 400016
+    second: props
+  - first:
+      4: 400018
+    second: safety
+  - first:
+      4: 400020
+    second: safety_inside
   - first:
       23: 2300000
+    second: cabin
+  - first:
+      23: 2300002
     second: //RootNode
+  - first:
+      23: 2300004
+    second: floor
+  - first:
+      23: 2300006
+    second: glass
+  - first:
+      23: 2300008
+    second: inside
+  - first:
+      23: 2300010
+    second: props
+  - first:
+      23: 2300012
+    second: safety
+  - first:
+      23: 2300014
+    second: safety_inside
   - first:
       33: 3300000
+    second: cabin
+  - first:
+      33: 3300002
     second: //RootNode
+  - first:
+      33: 3300004
+    second: floor
+  - first:
+      33: 3300006
+    second: glass
+  - first:
+      33: 3300008
+    second: inside
+  - first:
+      33: 3300010
+    second: props
+  - first:
+      33: 3300012
+    second: safety
+  - first:
+      33: 3300014
+    second: safety_inside
   - first:
       43: 4300000
-    second: tekparca
+    second: hull
   - first:
-      95: 9500000
-    second: //RootNode
-  externalObjects:
+      43: 4300002
+    second: floor
   - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: default
-    second: {fileID: 2100000, guid: 05437aececd71b347ae9b88677130244, type: 2}
+      43: 4300004
+    second: cabin
+  - first:
+      43: 4300006
+    second: props
+  - first:
+      43: 4300008
+    second: glass
+  - first:
+      43: 4300010
+    second: inside
+  - first:
+      43: 4300012
+    second: safety_inside
+  - first:
+      43: 4300014
+    second: safety
+  externalObjects: {}
   materials:
-    materialImportMode: 1
+    materialImportMode: 0
     materialName: 0
     materialSearch: 1
     materialLocation: 0
@@ -91,7 +206,7 @@ ModelImporter:
     blendShapeNormalImportMode: 1
     normalSmoothingSource: 0
   referencedClips: []
-  importAnimation: 0
+  importAnimation: 1
   humanDescription:
     serializedVersion: 3
     human: []
@@ -103,11 +218,11 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    globalScale: 0.01
+    globalScale: 1
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0
-    skeletonHasParents: 1
+    skeletonHasParents: 0
   lastHumanDescriptionAvatarSource: {instanceID: 0}
   autoGenerateAvatarMappingIfUnspecified: 1
   animationType: 0
