@@ -1,6 +1,8 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class NavyBrig : MonoBehaviour
 {
@@ -10,10 +12,13 @@ public class NavyBrig : MonoBehaviour
 
     private Rigidbody _rb;
     private float _nextAdjust = 0;
+    private Animator _animator;
 
     // Start is called before the first frame update
     void Start()
     {
+        _animator = GetComponent<Animator>();
+
         if (!gameObject.GetComponent<Rigidbody>())
         {
            _rb = gameObject.AddComponent<Rigidbody>();
@@ -35,4 +40,11 @@ public class NavyBrig : MonoBehaviour
         }
     }
 
+
+    private void OnTriggerEnter()   
+    {
+        Debug.Log(Math.Round(Random.value * 50));
+        if (Math.Round(Random.value * 50) == 5)
+            _animator.enabled = true;
+    }
 }

@@ -212,7 +212,7 @@
 		v2f o;
 		
 		float4 world_position = mul(unity_ObjectToWorld, v.vertex);
-		world_position.y = 10;
+		world_position.y = 0;
 		
 		float interactive = 0.0;
 		for (int i = 0; i < NB_INTERACTIONS; i++)
