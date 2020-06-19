@@ -30,7 +30,7 @@ public class PropellerBoats : MonoBehaviour
     float frame_rpm = engine_rpm * Time.deltaTime;
     for (int i = 0; i < propellers.Length; i++)
     {
-      propellers[i].localRotation = Quaternion.Euler(propellers[i].localRotation.eulerAngles + new Vector3(0, 0, -frame_rpm));
+//      propellers[i].localRotation = Quaternion.Euler(propellers[i].localRotation.eulerAngles + new Vector3(0, 0, -frame_rpm));
       rb.AddForceAtPosition(Quaternion.Euler(0, angle, 0) * propellers[i].forward * propellers_constant * engine_rpm, propellers[i].position);
     }
 
@@ -69,17 +69,22 @@ public class PropellerBoats : MonoBehaviour
   public void RudderRight()
   {
     angle -= 0.9F;
-    angle = Mathf.Clamp(angle, -90F, 90F);
-  }
+        //    angle = Mathf.Clamp(angle, -90F, 90F);
+        angle = Mathf.Clamp(angle, -5F, 5F);
+    }
 
   public void RudderLeft()
   {
     angle += 0.9F;
-    angle = Mathf.Clamp(angle, -90F, 90F);
+//    angle = Mathf.Clamp(angle, -90F, 90F);
+    angle = Mathf.Clamp(angle, -5F, 5F);
   }
 
   void OnDrawGizmos()
   {
-    Handles.Label(propellers[0].position, engine_rpm.ToString());
+      if (propellers != null && propellers.Length > 0)
+      {
+          Handles.Label(propellers[0].position, engine_rpm.ToString());
+      }
   }
 }
