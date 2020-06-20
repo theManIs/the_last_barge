@@ -105,6 +105,11 @@ public class Healthbar : MonoBehaviour {
             ChangeHealthbarColor(Color.Lerp(mediumHealthColor, highHealthColor, lerpedColorValue));
         }
 
+        if (healthbarDisplay == null)
+        {
+            healthbarDisplay = GetComponent<Slider>();
+        }
+
         healthbarDisplay.value = health;
     }
 

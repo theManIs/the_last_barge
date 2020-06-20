@@ -13,6 +13,8 @@ public class NavyBrig : MonoBehaviour
     public float EngineMaxRpm = 600;
     public float AccelerationStep = 20;
     public float MaxAngleShift = 60;
+    public BillboardHealth HealthCanvas;
+    public bool IsDead = false;
 
     private Rigidbody _rb;
     private float _nextAdjust = 0;
@@ -20,6 +22,7 @@ public class NavyBrig : MonoBehaviour
     private float _angle = 0;
     private float _engineRpm = 0;
     private float _throttle = 0;
+    private int _healthLevel = 100;
 
     // Start is called before the first frame update
     void Start()
@@ -32,13 +35,13 @@ public class NavyBrig : MonoBehaviour
         //           _rb.velocity = transform.forward * Velocity;
         //           _rb.useGravity = false;
         //        }
-
+        
+        /** Water interaction */
         if (!(_rb = GetComponent<Rigidbody>()))
         {
             _rb = gameObject.AddComponent<Rigidbody>();
         }
 
-        /** Water interaction */
         if (!GetComponent<MeshCollider>())
         {
             MeshCollider mc = gameObject.AddComponent<MeshCollider>();
@@ -55,44 +58,63 @@ public class NavyBrig : MonoBehaviour
 
         WaterCutter.CookCache(BuoyancyMesh, ref _triangles, ref worldBuffer, ref wetTris, ref dryTris);
         /** Water interaction */
+
+        /** Health display */
+        if (HealthCanvas)
+        {
+            HealthCanvas.SetHealth(_healthLevel);
+        }
+        /** Health display */
+
+        _animator = GetComponentInChildren<Animator>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKey(KeyCode.A))
-            RudderLeft();
-        else if (Input.GetKey(KeyCode.D))
-            RudderRight();
-
-        if (Input.GetKey(KeyCode.W)) {
-            ThrottleUp();
-        } else if (Input.GetKey(KeyCode.S)) {
-            ThrottleDown();
-        } 
-        
-//        if (!Input.GetKey(KeyCode.W) && !Input.GetKey(KeyCode.S)) {
-//            Brake();
-//        }
-
-
-        if (Time.time > _nextAdjust)
+        if (!this.IsDead)
         {
-            for (int i = 0; i < MaxAngleShift; i++)
-            {
+            if (Input.GetKey(KeyCode.A))
+                RudderLeft();
+            else if (Input.GetKey(KeyCode.D))
                 RudderRight();
+
+            if (Input.GetKey(KeyCode.W))
+            {
+                ThrottleUp();
+            }
+            else if (Input.GetKey(KeyCode.S))
+            {
+                ThrottleDown();
             }
 
-//            transform.Rotate(new Vector3(0,  YawAngle, 0));
-//        
-//            _rb.velocity = transform.forward * Velocity;
-            _nextAdjust = Time.time + Random.value * PassCourseTiming;
-            
-        }
+            //        if (!Input.GetKey(KeyCode.W) && !Input.GetKey(KeyCode.S)) {
+            //            Brake();
+            //        }
 
-        ThrottleUp();
-        AddTorque();
-        AngleDamping();
+            if (Time.time > _nextAdjust)
+            {
+                for (int i = 0; i < MaxAngleShift; i++)
+                {
+                    RudderRight();
+                }
+
+                //            transform.Rotate(new Vector3(0,  YawAngle, 0));
+                //        
+                //            _rb.velocity = transform.forward * Velocity;
+                _nextAdjust = Time.time + Random.value * PassCourseTiming;
+
+            }
+
+            ThrottleUp();
+            AddTorque();
+            AngleDamping();
+        }
+        else
+        {
+            Brake();
+            AngleDamping();
+        }
     }
 
     protected void AddTorque()
@@ -142,11 +164,37 @@ public class NavyBrig : MonoBehaviour
     }
 
 
-    private void OnTriggerEnter() 
+    private void OnTriggerEnter()
     {
+        _healthLevel -= 10;
+
+        if (HealthCanvas)
+        {
+            HealthCanvas.TakeDamage(10);
+        }
+
+        if (_animator && _healthLevel < 0)
+        {
+            this.IsDead = true;
+
+            _animator.SetBool("break", true);
+
+            Invoke("DecommissionBrig", 1);
+        }
+
 ////        Debug.Log(Math.Round(Random.value * 50));
 //        if (Math.Round(Random.value * 50) == 5)
 //            _animator.enabled = true;
+    }
+
+    protected void DecommissionBrig()
+    {
+        AnimatorClipInfo[] ac = _animator.GetCurrentAnimatorClipInfo(0);
+
+        if (ac.Length > 0)
+        {
+            Destroy(gameObject, ac[0].clip.length);
+        }
     }
 
 

@@ -32,10 +32,19 @@ public class MedievalCannon : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (_navyAims.Length > 0)
-        {
-            NavyBrig navyAim = _navyAims[0];
+        NavyBrig navyAim = null;
+        _navyAims = FindObjectsOfType<NavyBrig>();
 
+        foreach (NavyBrig navyBrig in _navyAims)
+        {
+            if (!navyBrig.IsDead && navyAim == null)
+            {
+                navyAim = _navyAims[0];
+            }
+        }
+
+        if (navyAim != null)
+        {
             Vector3 dir = navyAim.transform.position - _horizontalBlock.position;
             Vector3 eulerAngles = Quaternion.LookRotation(dir, Vector3.up).eulerAngles;
             _horizontalBlock.rotation = Quaternion.Euler(new Vector3(0, eulerAngles.y, 0));
@@ -45,9 +54,9 @@ public class MedievalCannon : MonoBehaviour
             verticalShift.x = Quaternion.LookRotation(dir2, Vector3.up).eulerAngles.x;
             _verticalBlock.rotation = Quaternion.Euler(verticalShift);
 
+            FireInTheHole();
         }
 
-        FireInTheHole();
     }
 
     private void FireInTheHole()
