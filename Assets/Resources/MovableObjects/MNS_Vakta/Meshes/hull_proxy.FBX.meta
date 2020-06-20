@@ -1,44 +1,25 @@
 fileFormatVersion: 2
-guid: 381be158fa7ea7e43a06766c28dee82a
-timeCreated: 1539758592
+guid: 8ec5d0198ea7e184b91e68ad7a594e05
+timeCreated: 1461171640
 licenseType: Store
 ModelImporter:
   serializedVersion: 19
   fileIDToRecycleName:
-    100000: cannon
-    100002: cannon_2
-    100004: cannon_2_p
-    100006: cannon_p
-    100008: //RootNode
-    400000: cannon
-    400002: cannon_2
-    400004: cannon_2_p
-    400006: cannon_p
-    400008: //RootNode
-    2300000: cannon
-    2300002: cannon_2
-    2300004: cannon_2_p
-    2300006: cannon_p
-    3300000: cannon
-    3300002: cannon_2
-    3300004: cannon_2_p
-    3300006: cannon_p
-    4300000: cannon_2_p
-    4300002: cannon_2
-    4300004: cannon_p
-    4300006: cannon
+    100000: //RootNode
+    400000: //RootNode
+    2300000: //RootNode
+    3300000: //RootNode
+    4300000: hull_proxy
   materials:
-    importMaterials: 1
+    importMaterials: 0
     materialName: 0
     materialSearch: 1
   animations:
     legacyGenerateAnimations: 4
     bakeSimulation: 0
-    resampleCurves: 1
+    resampleRotations: 1
     optimizeGameObjects: 0
     motionNodeName: 
-    rigImportErrors: 
-    rigImportWarnings: 
     animationImportErrors: 
     animationImportWarnings: 
     animationRetargetingWarnings: 
@@ -75,7 +56,6 @@ ModelImporter:
   importAnimation: 1
   copyAvatar: 0
   humanDescription:
-    serializedVersion: 2
     human: []
     skeleton: []
     armTwist: 0.5
@@ -86,10 +66,7 @@ ModelImporter:
     legStretch: 0.05
     feetSpacing: 0
     rootMotionBoneName: 
-    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
     hasTranslationDoF: 0
-    hasExtraRoot: 0
-    skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
   animationType: 0
   humanoidOversampling: 1

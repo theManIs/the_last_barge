@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using ArchimedsLab;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -16,7 +17,6 @@ public class NavyBrig : MonoBehaviour
     private Rigidbody _rb;
     private float _nextAdjust = 0;
     private Animator _animator;
-    private PropellerBoats _pb;
     private float _angle = 0;
     private float _engineRpm = 0;
     private float _throttle = 0;
@@ -26,15 +26,35 @@ public class NavyBrig : MonoBehaviour
     {
         _animator = GetComponent<Animator>();
 
-//        if (!gameObject.GetComponent<Rigidbody>())
-//        {
-//           _rb = gameObject.AddComponent<Rigidbody>();
-//           _rb.velocity = transform.forward * Velocity;
-//           _rb.useGravity = false;
-//        }
+        //        if (!gameObject.GetComponent<Rigidbody>())
+        //        {
+        //           _rb = gameObject.AddComponent<Rigidbody>();
+        //           _rb.velocity = transform.forward * Velocity;
+        //           _rb.useGravity = false;
+        //        }
 
-        _rb = GetComponent<Rigidbody>();
-        _pb = GetComponent<PropellerBoats>();
+        if (!(_rb = GetComponent<Rigidbody>()))
+        {
+            _rb = gameObject.AddComponent<Rigidbody>();
+        }
+
+        /** Water interaction */
+        if (!GetComponent<MeshCollider>())
+        {
+            MeshCollider mc = gameObject.AddComponent<MeshCollider>();
+            mc.convex = true;
+            mc.sharedMesh = BuoyancyMesh;
+        }
+
+        if (!_rb)
+            _rb = GetComponent<Rigidbody>();
+
+        S_centerOfMass = _rb.centerOfMass;
+        _lastPosition = transform.position;
+        _rb.mass = TotalMass;
+
+        WaterCutter.CookCache(BuoyancyMesh, ref _triangles, ref worldBuffer, ref wetTris, ref dryTris);
+        /** Water interaction */
     }
 
     // Update is called once per frame
@@ -55,8 +75,6 @@ public class NavyBrig : MonoBehaviour
 //            Brake();
 //        }
 
-        ThrottleUp();
-        AddTorque();
 
         if (Time.time > _nextAdjust)
         {
@@ -72,6 +90,8 @@ public class NavyBrig : MonoBehaviour
             
         }
 
+        ThrottleUp();
+        AddTorque();
         AngleDamping();
     }
 
@@ -128,4 +148,78 @@ public class NavyBrig : MonoBehaviour
         if (Math.Round(Random.value * 50) == 5)
             _animator.enabled = true;
     }
+
+
+    public int TotalMass = 70000;
+    public Vector3 centerOfMassOffset = new Vector3(0F, 0F, 0F);
+    Vector3 S_centerOfMass;
+    public Mesh BuoyancyMesh;
+    private Vector3 _lastPosition;
+
+
+    /* These 4 arrays are cache array, preventing some operations to be done each frame. */
+    tri[] _triangles;
+    tri[] worldBuffer;
+    tri[] wetTris;
+    tri[] dryTris;
+    //These two variables will store the number of valid triangles in each cache arrays. They are different from array.Length !
+    uint nbrWet, nbrDry;
+
+    WaterSurface.GetWaterHeight realist = delegate (Vector3 pos)
+    {
+        const float eps = 0.1f;
+        return (OceanAdvanced.GetWaterHeight(pos + new Vector3(-eps, 0F, -eps))
+              + OceanAdvanced.GetWaterHeight(pos + new Vector3(eps, 0F, -eps))
+              + OceanAdvanced.GetWaterHeight(pos + new Vector3(0F, 0F, eps))) / 3F;
+    };
+
+    protected void FixedUpdate()
+    {
+    #if UNITY_EDITOR
+        if (_rb.centerOfMass != S_centerOfMass + centerOfMassOffset)
+                _rb.centerOfMass = S_centerOfMass + centerOfMassOffset;
+    #endif
+
+        Vector3 speedVector = (transform.position - _lastPosition) / Time.deltaTime;
+        _lastPosition = transform.position;
+
+        if (_rb.IsSleeping())
+            return;
+
+        WaterCutter.CookMesh(transform.position, transform.rotation, ref _triangles, ref worldBuffer);
+
+        WaterCutter.SplitMesh(worldBuffer, ref wetTris, ref dryTris, out nbrWet, out nbrDry, realist);
+        Archimeds.ComputeAllForces(wetTris, dryTris, nbrWet, nbrDry, speedVector, _rb);
+    }
+
+#if UNITY_EDITOR
+    //Some visualizations for this buoyancy script.
+    protected void OnDrawGizmos()
+    {
+        if (_rb)
+        {
+            if (!Application.isPlaying)
+                return;
+
+            Gizmos.color = Color.black;
+            Gizmos.DrawWireSphere(_rb.worldCenterOfMass, 0.25F);
+
+            Gizmos.color = Color.blue;
+            for (uint i = 0; i < nbrWet; i++)
+            {
+                Gizmos.DrawLine(wetTris[i].a, wetTris[i].b);
+                Gizmos.DrawLine(wetTris[i].b, wetTris[i].c);
+                Gizmos.DrawLine(wetTris[i].a, wetTris[i].c);
+            }
+
+            Gizmos.color = Color.yellow;
+            for (uint i = 0; i < nbrDry; i++)
+            {
+                Gizmos.DrawLine(dryTris[i].a, dryTris[i].b);
+                Gizmos.DrawLine(dryTris[i].b, dryTris[i].c);
+                Gizmos.DrawLine(dryTris[i].a, dryTris[i].c);
+            }
+        }
+    }
+#endif
 }
