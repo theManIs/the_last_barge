@@ -24,7 +24,7 @@ public class NavyBrig : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _animator = GetComponent<Animator>();
+//        _animator = GetComponent<Animator>();
 
         //        if (!gameObject.GetComponent<Rigidbody>())
         //        {
@@ -144,9 +144,9 @@ public class NavyBrig : MonoBehaviour
 
     private void OnTriggerEnter() 
     {
-//        Debug.Log(Math.Round(Random.value * 50));
-        if (Math.Round(Random.value * 50) == 5)
-            _animator.enabled = true;
+////        Debug.Log(Math.Round(Random.value * 50));
+//        if (Math.Round(Random.value * 50) == 5)
+//            _animator.enabled = true;
     }
 
 
