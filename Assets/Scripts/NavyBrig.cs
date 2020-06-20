@@ -144,7 +144,7 @@ public class NavyBrig : MonoBehaviour
 
     private void OnTriggerEnter() 
     {
-        Debug.Log(Math.Round(Random.value * 50));
+//        Debug.Log(Math.Round(Random.value * 50));
         if (Math.Round(Random.value * 50) == 5)
             _animator.enabled = true;
     }
