@@ -9,8 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4441567647419268}
-  - component: {fileID: 33446980349894942}
-  - component: {fileID: 23747451533563324}
   - component: {fileID: 1188236910}
   m_Layer: 0
   m_Name: MedievalCannon
@@ -30,25 +28,78 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 4580886018613470}
+  - {fileID: 6466683956566443996}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &33446980349894942
+--- !u!114 &1188236910
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1416460943196994}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 04271e0f6cb36854782beb713218d6ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CannonShell: {fileID: 4663043758917206, guid: b5df4515b4e36124184e3a40d6b78d06,
+    type: 3}
+  Velocity: 25
+  Timing: 1
+  ShellDestruction: 3
+  FirePointPath: GunCarriage/IronCannon/FirePoint
+  VerticalRotationBlock: GunCarriage/IronCannon
+  HorizontalRotationBlock: GunCarriage
+--- !u!1 &1824322870616738
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4580886018613470}
+  - component: {fileID: 33358703210719416}
+  - component: {fileID: 23886964908017332}
+  m_Layer: 0
+  m_Name: IronCannon
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4580886018613470
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1824322870616738}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.63604623, z: 0.22506273}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1374191976017382051}
+  m_Father: {fileID: 6466683956566443996}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!33 &33358703210719416
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1416460943196994}
-  m_Mesh: {fileID: 4300004, guid: 381be158fa7ea7e43a06766c28dee82a, type: 3}
---- !u!23 &23747451533563324
+  m_GameObject: {fileID: 1824322870616738}
+  m_Mesh: {fileID: -190514365616097883, guid: 71be3bac62544c24a8844be2d862e6d1, type: 3}
+--- !u!23 &23886964908017332
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1416460943196994}
+  m_GameObject: {fileID: 1824322870616738}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -81,25 +132,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!114 &1188236910
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1416460943196994}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 04271e0f6cb36854782beb713218d6ef, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  CannonShell: {fileID: 4663043758917206, guid: b5df4515b4e36124184e3a40d6b78d06,
-    type: 3}
-  Velocity: 25
-  Timing: 1
-  ShellDestruction: 3
-  FirePointPath: cannon
---- !u!1 &1824322870616738
+--- !u!1 &3299107805029538253
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -107,45 +140,76 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 4580886018613470}
-  - component: {fileID: 33358703210719416}
-  - component: {fileID: 23886964908017332}
+  - component: {fileID: 1374191976017382051}
   m_Layer: 0
-  m_Name: cannon
+  m_Name: FirePoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4580886018613470
+--- !u!4 &1374191976017382051
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1824322870616738}
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0, y: 0.63604623, z: 0.22506273}
+  m_GameObject: {fileID: 3299107805029538253}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.67, y: 3.71, z: 7.08}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
+  m_Father: {fileID: 4580886018613470}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &3580744309609873952
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6466683956566443996}
+  - component: {fileID: 5911466638710614709}
+  - component: {fileID: 5100522144184527999}
+  m_Layer: 0
+  m_Name: GunCarriage
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6466683956566443996
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3580744309609873952}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 4580886018613470}
   m_Father: {fileID: 4441567647419268}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &33358703210719416
+--- !u!33 &5911466638710614709
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1824322870616738}
-  m_Mesh: {fileID: 4300006, guid: 381be158fa7ea7e43a06766c28dee82a, type: 3}
---- !u!23 &23886964908017332
+  m_GameObject: {fileID: 3580744309609873952}
+  m_Mesh: {fileID: 7054548767216104213, guid: 71be3bac62544c24a8844be2d862e6d1, type: 3}
+--- !u!23 &5100522144184527999
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1824322870616738}
+  m_GameObject: {fileID: 3580744309609873952}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1

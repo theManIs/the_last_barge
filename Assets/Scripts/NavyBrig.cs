@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using ArchimedsLab;
 using UnityEngine;
+using UnityEngine.PlayerLoop;
 using Random = UnityEngine.Random;
 
 public class NavyBrig : MonoBehaviour
@@ -13,6 +14,8 @@ public class NavyBrig : MonoBehaviour
     public float EngineMaxRpm = 600;
     public float AccelerationStep = 20;
     public float MaxAngleShift = 60;
+    public BillboardHealth HealthCanvas;
+    public bool IsDead = false;
 
     private Rigidbody _rb;
     private float _nextAdjust = 0;
@@ -20,11 +23,13 @@ public class NavyBrig : MonoBehaviour
     private float _angle = 0;
     private float _engineRpm = 0;
     private float _throttle = 0;
+    private int _healthLevel = 100;
+    private int _tmpDamage = 5;
 
     // Start is called before the first frame update
     void Start()
     {
-        _animator = GetComponent<Animator>();
+//        _animator = GetComponent<Animator>();
 
         //        if (!gameObject.GetComponent<Rigidbody>())
         //        {
@@ -32,13 +37,13 @@ public class NavyBrig : MonoBehaviour
         //           _rb.velocity = transform.forward * Velocity;
         //           _rb.useGravity = false;
         //        }
-
+        
+        /** Water interaction */
         if (!(_rb = GetComponent<Rigidbody>()))
         {
             _rb = gameObject.AddComponent<Rigidbody>();
         }
 
-        /** Water interaction */
         if (!GetComponent<MeshCollider>())
         {
             MeshCollider mc = gameObject.AddComponent<MeshCollider>();
@@ -55,50 +60,89 @@ public class NavyBrig : MonoBehaviour
 
         WaterCutter.CookCache(BuoyancyMesh, ref _triangles, ref worldBuffer, ref wetTris, ref dryTris);
         /** Water interaction */
+
+        /** Health display */
+        if (HealthCanvas)
+        {
+            HealthCanvas.SetHealth(_healthLevel);
+        }
+        /** Health display */
+
+        _animator = GetComponentInChildren<Animator>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKey(KeyCode.A))
-            RudderLeft();
-        else if (Input.GetKey(KeyCode.D))
-            RudderRight();
-
-        if (Input.GetKey(KeyCode.W)) {
-            ThrottleUp();
-        } else if (Input.GetKey(KeyCode.S)) {
-            ThrottleDown();
-        } 
-        
-//        if (!Input.GetKey(KeyCode.W) && !Input.GetKey(KeyCode.S)) {
-//            Brake();
-//        }
-
-
-        if (Time.time > _nextAdjust)
+        if (!this.IsDead)
         {
-            for (int i = 0; i < MaxAngleShift; i++)
-            {
+            if (Input.GetKey(KeyCode.A))
+                RudderLeft();
+            else if (Input.GetKey(KeyCode.D))
                 RudderRight();
+
+            if (Input.GetKey(KeyCode.W))
+            {
+                ThrottleUp();
+            }
+            else if (Input.GetKey(KeyCode.S))
+            {
+                ThrottleDown();
             }
 
-//            transform.Rotate(new Vector3(0,  YawAngle, 0));
-//        
-//            _rb.velocity = transform.forward * Velocity;
-            _nextAdjust = Time.time + Random.value * PassCourseTiming;
-            
+            //        if (!Input.GetKey(KeyCode.W) && !Input.GetKey(KeyCode.S)) {
+            //            Brake();
+            //        }
+
+            if (Time.time > _nextAdjust)
+            {
+                for (int i = 0; i < MaxAngleShift; i++)
+                {
+                    RudderRight();
+                }
+
+                //            transform.Rotate(new Vector3(0,  YawAngle, 0));
+                //        
+                //            _rb.velocity = transform.forward * Velocity;
+                _nextAdjust = Time.time + Random.value * PassCourseTiming;
+
+            }
+
+            ThrottleUp();
+            AngleDamping();
+            AngleDamping();
+//            FixedUpdate2();
+        }
+        else
+        {
+            Brake();
+            AngleDamping();
         }
 
-        ThrottleUp();
-        AddTorque();
-        AngleDamping();
+        if (Input.GetKey(KeyCode.F9))
+        {
+            for (int i = 0; i < 10; i++)
+            {
+
+                Debug.Log("f9 pressed");
+            }
+        }
     }
+
+    protected void FixedUpdate()
+    {
+        AddTorque();
+        FixedUpdate2();
+    }
+
 
     protected void AddTorque()
     {
         _engineRpm = _throttle * EngineMaxRpm;
-        _rb.AddForceAtPosition(Quaternion.Euler(0, _angle, 0) * transform.forward * _engineRpm, transform.position);
+        Vector3 speedVector = Quaternion.Euler(0, _angle, 0) * transform.forward * _engineRpm;
+//        _rb.AddForceAtPosition(speedVector, transform.position);
+        _rb.AddForce(speedVector);
+//        Debug.Log($"AddTorque speedVector {speedVector} ");
     }
     public void ThrottleUp()
     {
@@ -142,11 +186,37 @@ public class NavyBrig : MonoBehaviour
     }
 
 
-    private void OnTriggerEnter() 
+    private void OnTriggerEnter()
     {
-//        Debug.Log(Math.Round(Random.value * 50));
-        if (Math.Round(Random.value * 50) == 5)
-            _animator.enabled = true;
+        _healthLevel -= _tmpDamage;
+
+        if (HealthCanvas)
+        {
+            HealthCanvas.TakeDamage(_tmpDamage);
+        }
+
+        if (_animator && _healthLevel < 0)
+        {
+            this.IsDead = true;
+
+            _animator.SetBool("break", true);
+
+            Invoke("DecommissionBrig", 1);
+        }
+
+////        Debug.Log(Math.Round(Random.value * 50));
+//        if (Math.Round(Random.value * 50) == 5)
+//            _animator.enabled = true;
+    }
+
+    protected void DecommissionBrig()
+    {
+        AnimatorClipInfo[] ac = _animator.GetCurrentAnimatorClipInfo(0);
+
+        if (ac.Length > 0)
+        {
+            Destroy(gameObject, ac[0].clip.length);
+        }
     }
 
 
@@ -173,7 +243,7 @@ public class NavyBrig : MonoBehaviour
               + OceanAdvanced.GetWaterHeight(pos + new Vector3(0F, 0F, eps))) / 3F;
     };
 
-    protected void FixedUpdate()
+    protected void FixedUpdate2()
     {
     #if UNITY_EDITOR
         if (_rb.centerOfMass != S_centerOfMass + centerOfMassOffset)
