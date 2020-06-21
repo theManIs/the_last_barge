@@ -142,7 +142,7 @@ public class NavyBrig : MonoBehaviour
         Vector3 speedVector = Quaternion.Euler(0, _angle, 0) * transform.forward * _engineRpm;
 //        _rb.AddForceAtPosition(speedVector, transform.position);
         _rb.AddForce(speedVector);
-        Debug.Log($"AddTorque speedVector {speedVector} ");
+//        Debug.Log($"AddTorque speedVector {speedVector} ");
     }
     public void ThrottleUp()
     {
