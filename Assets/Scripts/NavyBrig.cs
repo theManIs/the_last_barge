@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using ArchimedsLab;
 using UnityEngine;
+using UnityEngine.PlayerLoop;
 using Random = UnityEngine.Random;
 
 public class NavyBrig : MonoBehaviour
@@ -23,6 +24,7 @@ public class NavyBrig : MonoBehaviour
     private float _engineRpm = 0;
     private float _throttle = 0;
     private int _healthLevel = 100;
+    private int _tmpDamage = 5;
 
     // Start is called before the first frame update
     void Start()
@@ -107,20 +109,40 @@ public class NavyBrig : MonoBehaviour
             }
 
             ThrottleUp();
-            AddTorque();
             AngleDamping();
+            AngleDamping();
+//            FixedUpdate2();
         }
         else
         {
             Brake();
             AngleDamping();
         }
+
+        if (Input.GetKey(KeyCode.F9))
+        {
+            for (int i = 0; i < 10; i++)
+            {
+
+                Debug.Log("f9 pressed");
+            }
+        }
     }
+
+    protected void FixedUpdate()
+    {
+        AddTorque();
+        FixedUpdate2();
+    }
+
 
     protected void AddTorque()
     {
         _engineRpm = _throttle * EngineMaxRpm;
-        _rb.AddForceAtPosition(Quaternion.Euler(0, _angle, 0) * transform.forward * _engineRpm, transform.position);
+        Vector3 speedVector = Quaternion.Euler(0, _angle, 0) * transform.forward * _engineRpm;
+//        _rb.AddForceAtPosition(speedVector, transform.position);
+        _rb.AddForce(speedVector);
+        Debug.Log($"AddTorque speedVector {speedVector} ");
     }
     public void ThrottleUp()
     {
@@ -166,11 +188,11 @@ public class NavyBrig : MonoBehaviour
 
     private void OnTriggerEnter()
     {
-        _healthLevel -= 10;
+        _healthLevel -= _tmpDamage;
 
         if (HealthCanvas)
         {
-            HealthCanvas.TakeDamage(10);
+            HealthCanvas.TakeDamage(_tmpDamage);
         }
 
         if (_animator && _healthLevel < 0)
@@ -221,7 +243,7 @@ public class NavyBrig : MonoBehaviour
               + OceanAdvanced.GetWaterHeight(pos + new Vector3(0F, 0F, eps))) / 3F;
     };
 
-    protected void FixedUpdate()
+    protected void FixedUpdate2()
     {
     #if UNITY_EDITOR
         if (_rb.centerOfMass != S_centerOfMass + centerOfMassOffset)
