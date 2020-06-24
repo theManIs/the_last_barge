@@ -82,6 +82,19 @@ namespace Assets.Scripts.Constructions.ConstructionCrane
             return false;
         }
 
+        public bool DoesTouchBuildingZone(int layerId)
+        {
+            if (CastRayFromScreen(out RaycastHit hit))
+            {
+                if (hit.transform.gameObject.layer == layerId)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
         protected bool CastRayFromScreen(out RaycastHit hit)
         {
             Ray cameraRay = WorldCamera.ScreenPointToRay(Input.mousePosition);
