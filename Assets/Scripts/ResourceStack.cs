@@ -20,7 +20,7 @@ public class ResourceStack : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        PlaceResources();
+//        PlaceResources();
     }
 
     public void PlaceResources()
@@ -61,14 +61,15 @@ public class ResourceStack : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        ClearPile();
+        PlaceResources();
     }
 
     public void ClearPile()
     {
         int childCount = transform.childCount;
 
-        for (int i = childCount; i > 0; i--)
+        for (int i = childCount - 1; i >= 0; i--)
         {
             DestroyImmediate(transform.GetChild(i).gameObject);
         }
