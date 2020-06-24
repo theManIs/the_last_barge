@@ -71,6 +71,7 @@ public class ConstructionCrane : MonoBehaviour
         {
             _canBuild = _ccm.CanBeBuilt(CurrentBuilding);
             _canBuild = !_ccm.DoesTouchTheBarge(CentralBarge, CurrentBuilding) && _canBuild;
+            _canBuild = ResourcesInStoke && ResourcesInStoke.StackSize > 0 && _canBuild;
             
             if (!_canBuild && BadConstructionMaterial)
             {

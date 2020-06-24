@@ -127,6 +127,12 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 5611083623307522151}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &37618996 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8350582512774256281, guid: 21c3df7f36455cd4dae955e7b5740292,
+    type: 3}
+  m_PrefabInstance: {fileID: 5611083623307522151}
+  m_PrefabAsset: {fileID: 0}
 --- !u!65 &37618999
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -179,6 +185,8 @@ MonoBehaviour:
     type: 2}
   BadConstructionMaterial: {fileID: 2100000, guid: bd5ddf23fa34b854e9ea218943c30c2f,
     type: 2}
+  CentralBarge: {fileID: 37618996}
+  ResourcesInStoke: {fileID: 582668822}
 --- !u!4 &368698844
 Transform:
   m_ObjectHideFlags: 0
@@ -192,6 +200,61 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &582668821
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 582668823}
+  - component: {fileID: 582668822}
+  m_Layer: 0
+  m_Name: ResourcesStock
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &582668822
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 582668821}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dece9b27a38ec6b429b17b1c30d5673e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ResourceInstance: {fileID: 3308353670781956143, guid: d44aabe5fbd258d4ebdb1cdaafa6b4dc,
+    type: 3}
+  GapSize: 5
+  StackSize: 7
+  StackWidth: 2
+  StackDepth: 2
+  StackHeight: 3
+  InstanceWidth: 1
+  InstanceHeight: 1
+  ChessPosition: 0
+  DoGizmosDrawn: 1
+  ReleaseStack: 0
+--- !u!4 &582668823
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 582668821}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -69.51, y: -11.54, z: 72.94}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &863729941
 PrefabInstance:
