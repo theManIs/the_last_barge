@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Assets.Scripts.Constructions.ConstructionCrane;
 using UnityEngine;
 
 public class ConstructionCrane : MonoBehaviour
@@ -11,15 +12,22 @@ public class ConstructionCrane : MonoBehaviour
     public Transform CurrentBuilding;
     public Material ConstructionMaterial;
     public Material BadConstructionMaterial;
+    public Transform CentralBarge;
+    public ResourceStack ResourcesInStoke;
 
     private int _frameLockerSoft = 0;
     private int _frameLockerHard = 25;
     private bool _canBuild = true;
+    private ConstructionCraneModel _ccm;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        if (WorldCamera)
+        {
+            _ccm = new ConstructionCraneModel();
+            _ccm.WorldCamera = WorldCamera;
+        }
     }
 
     // Update is called once per frame
@@ -29,9 +37,16 @@ public class ConstructionCrane : MonoBehaviour
         {
             if (CastRayFromScreen(out RaycastHit hit) && hit.transform.name == TargetObjectName && !LockedThing)
             {
-                Debug.Log(hit.transform.name);
-                LockedThing = true;
-                SpawnBuilding();
+//                Debug.Log(hit.transform.name);
+
+                if (AvailableBuildings.Length > 0)
+                {
+                    LockedThing = true;
+                    CurrentBuilding = _ccm.SpawnBuilding(AvailableBuildings[0]);
+
+                    ApplyLayer(CurrentBuilding, 2);
+                }
+//                SpawnBuilding();
 
                 _frameLockerSoft = _frameLockerHard;
             }
@@ -42,8 +57,6 @@ public class ConstructionCrane : MonoBehaviour
             BuildOne();
 
             _frameLockerSoft = _frameLockerHard;
-             
-            
         }
 
         ActualPosition();
@@ -56,46 +69,16 @@ public class ConstructionCrane : MonoBehaviour
     {
         if (CurrentBuilding)
         {
-            Collider c = CurrentBuilding.GetComponent<Collider>();
-            Vector3 constructionCenter = c.bounds.center;
-            float sphereRadius = c.bounds.size.x / 2;
-            Vector3 topHalfCenter = new Vector3(constructionCenter.x, c.bounds.max.y - sphereRadius, constructionCenter.z);
-            Vector3 botHalfCenter = new Vector3(constructionCenter.x, c.bounds.min.y + sphereRadius, constructionCenter.z);
-            _canBuild = true;
-
-            RaycastHit[] heathens = Physics.SphereCastAll(topHalfCenter, sphereRadius, Vector3.forward, sphereRadius);
-            RaycastHit[] heathens2 = Physics.SphereCastAll(botHalfCenter, sphereRadius, Vector3.forward, sphereRadius);
-
-            foreach (RaycastHit heathen in heathens)
-            {
-//                Debug.Log(heathen.transform.gameObject.name + " " + CurrentBuilding.gameObject.name);
-                if (heathen.transform.gameObject.name.Equals(CurrentBuilding.gameObject.name))
-                {
-                    _canBuild = false;
-                }
-//                Debug.Log("HIT " + heathen.transform.gameObject.name);
-            }
-
-            foreach (RaycastHit heathen in heathens2)
-            {
-//                Debug.Log(heathen.transform.gameObject.name + " " + CurrentBuilding.gameObject.name);
-                if (heathen.transform.gameObject.name.Equals(CurrentBuilding.gameObject.name))
-                {
-                    _canBuild = false;
-                }
-//                Debug.Log("HIT " + heathen.transform.gameObject.name);
-            }
-
-//            if (CastRayFromScreen(out RaycastHit hit))
-//            {
-//                if (hit.transform.position.y != )
-//            }
-
+            _canBuild = _ccm.CanBeBuilt(CurrentBuilding);
+            _canBuild = !_ccm.DoesTouchTheBarge(CentralBarge, CurrentBuilding) && _canBuild;
+            _canBuild = _ccm.DoesTouchBuildingZone(LayerMask.NameToLayer("BuildingZone")) && _canBuild;
+            _canBuild = ResourcesInStoke && ResourcesInStoke.StackSize > 0 && _canBuild;
+            
             if (!_canBuild && BadConstructionMaterial)
             {
                 ApplyMaterial(CurrentBuilding, BadConstructionMaterial);
             }
-            else
+            else if (ConstructionMaterial)
             {
                 ApplyMaterial(CurrentBuilding, ConstructionMaterial);
             }
@@ -130,7 +113,7 @@ public class ConstructionCrane : MonoBehaviour
                 Collider buildingCollider = CurrentBuilding.GetComponent<Collider>();
                 Vector3 mousePoint = hit.point;
 
-                if (buildingCollider)
+                if (buildingCollider && ResourcesInStoke && ResourcesInStoke.StackSize > 0)
                 {
                     mousePoint.y += buildingCollider.bounds.size.y / 2;
 
@@ -140,6 +123,8 @@ public class ConstructionCrane : MonoBehaviour
 
                     CurrentBuilding = null;
                     LockedThing = false;
+
+                    ResourcesInStoke.StackSize -= 1;
                 }
             }
         }
@@ -164,23 +149,23 @@ public class ConstructionCrane : MonoBehaviour
         }
     }
 
-    public void SpawnBuilding()
-    {
-        if (AvailableBuildings.Length > 0)
-        {
-            if (CastRayFromScreen(out RaycastHit hit))
-            {
-                CurrentBuilding = Instantiate(AvailableBuildings[0], hit.point, Quaternion.identity);
-
-                if (ConstructionMaterial)
-                {
-                    ApplyLayer(CurrentBuilding, 2);
-
-                    CurrentBuilding.GetComponent<Collider>().isTrigger = true;
-                }
-            }
-        }
-    }
+//    public void SpawnBuilding()
+//    {
+//        if (AvailableBuildings.Length > 0)
+//        {
+//            if (CastRayFromScreen(out RaycastHit hit))
+//            {
+//                CurrentBuilding = Instantiate(AvailableBuildings[0], hit.point, Quaternion.identity);
+//
+//                if (ConstructionMaterial)
+//                {
+//                    ApplyLayer(CurrentBuilding, 2);
+//
+//                    CurrentBuilding.GetComponent<Collider>().isTrigger = true;
+//                }
+//            }
+//        }
+//    }
 
     protected void ApplyLayer(Transform buildingTransform, int layerOrdinal)
     {
@@ -221,6 +206,6 @@ public class ConstructionCrane : MonoBehaviour
     {
         Ray cameraRay = WorldCamera.ScreenPointToRay(Input.mousePosition);
 
-        return Physics.Raycast(cameraRay, out hit, 1000f, LayerMask.GetMask("Building"));
+        return Physics.Raycast(cameraRay, out hit, 1000f);
     }
 }
