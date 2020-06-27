@@ -201,7 +201,7 @@ public class NavyBrig : MonoBehaviour
 
             _animator.SetBool("break", true);
 
-            Invoke("DecommissionBrig", 1);
+            DecommissionBrig();
         }
 
 ////        Debug.Log(Math.Round(Random.value * 50));
@@ -216,6 +216,10 @@ public class NavyBrig : MonoBehaviour
         if (ac.Length > 0)
         {
             Destroy(gameObject, ac[0].clip.length);
+        }
+        else
+        {
+            Invoke("DecommissionBrig", 1);
         }
     }
 
