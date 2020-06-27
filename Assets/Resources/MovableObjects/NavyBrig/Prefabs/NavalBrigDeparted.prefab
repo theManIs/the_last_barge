@@ -1,5 +1,19 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &2075355252
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 977666661}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 04fdc60a4c445e74593fc9dfb194eaac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  RelatedObject: {fileID: 405726550}
+  HealthBar: {fileID: 114595396475566601}
 --- !u!1 &2176120402600883212
 GameObject:
   m_ObjectHideFlags: 0
@@ -160,7 +174,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2176120403751851842}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5.4037666, y: -1.5746944, z: -0.045193195}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2176120403794297073}
@@ -196,9 +210,11 @@ MonoBehaviour:
   AngleVelocity: 1
   PassCourseTiming: 5
   YawAngle: 15
-  EngineMaxRpm: 50000
+  EngineMaxRpm: 200000
   AccelerationStep: 100
   MaxAngleShift: 60
+  HealthCanvas: {fileID: 2075355252}
+  IsDead: 0
   TotalMass: 50000
   centerOfMassOffset: {x: 0, y: -2, z: 0}
   BuoyancyMesh: {fileID: -8853556785008090690, guid: cdb93641082564945913fddaaebde18e,
@@ -214,8 +230,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 8.934525, y: 4.461467, z: 29.493256}
-  m_Center: {x: 0.03236389, y: 1.7307334, z: -0.951107}
+  m_Size: {x: 8.934525, y: 4.461467, z: 31.476303}
+  m_Center: {x: 0.03236389, y: 1.7307334, z: 0.040416718}
 --- !u!1 &2176120403883688331
 GameObject:
   m_ObjectHideFlags: 0
@@ -375,18 +391,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!114 &2075355252
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 977666661}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 04fdc60a4c445e74593fc9dfb194eaac, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &3817256305775806369
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -509,15 +513,20 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 3850484323002271386, guid: db7edf3c445e204438daa9354e838c9e,
+        type: 3}
+      propertyPath: m_TargetGraphic
+      value: 
+      objectReference: {fileID: 114647762435177581}
     - target: {fileID: 4028098117813876196, guid: db7edf3c445e204438daa9354e838c9e,
         type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4028098117813876196, guid: db7edf3c445e204438daa9354e838c9e,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: db7edf3c445e204438daa9354e838c9e, type: 3}
@@ -533,3 +542,27 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 3817256305775806369}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &114595396475566601 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3850157140781120936, guid: db7edf3c445e204438daa9354e838c9e,
+    type: 3}
+  m_PrefabInstance: {fileID: 3817256305775806369}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ee56578d4c29be43886fa650bda94d6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &114647762435177581 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3850245538567879628, guid: db7edf3c445e204438daa9354e838c9e,
+    type: 3}
+  m_PrefabInstance: {fileID: 3817256305775806369}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
