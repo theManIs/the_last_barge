@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Barco_Material_AlbedoTransparency
+  m_Name: plot_DefaultMaterial_AlbedoTransparency
   m_Shader: {fileID: 46, guid: 0000000000000000f000000000000000, type: 0}
   m_ShaderKeywords: _METALLICGLOSSMAP _NORMALMAP
   m_LightmapFlags: 4
@@ -20,7 +20,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _BumpMap:
-        m_Texture: {fileID: 2800000, guid: c7d046f56c40bcc41b4fc64d3d75fba4, type: 3}
+        m_Texture: {fileID: 2800000, guid: 858c0d5b9bb85464ab2e62f304e5f6e9, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _DetailAlbedoMap:
@@ -40,11 +40,11 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 1062a804ba6aa6b449a3edb2ba8536a8, type: 3}
+        m_Texture: {fileID: 2800000, guid: dd7a70ed5e9674e4c9f8bb57d0a90df8, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
-        m_Texture: {fileID: 2800000, guid: 18b151886c5d32e41aa3b81a3ef46f53, type: 3}
+        m_Texture: {fileID: 2800000, guid: 584d429433bac474391f26ca199afd12, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _OcclusionMap:
