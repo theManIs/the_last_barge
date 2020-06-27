@@ -128,6 +128,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1845345307}
     m_Modifications:
+    - target: {fileID: 1380432745117708771, guid: f52828641954bb6488858b43d61b3b50,
+        type: 3}
+      propertyPath: EffectiveDistance
+      value: 200
+      objectReference: {fileID: 0}
     - target: {fileID: 1380432746831047339, guid: f52828641954bb6488858b43d61b3b50,
         type: 3}
       propertyPath: m_Name
@@ -299,6 +304,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1845345307}
     m_Modifications:
+    - target: {fileID: 1380432745117708771, guid: f52828641954bb6488858b43d61b3b50,
+        type: 3}
+      propertyPath: EffectiveDistance
+      value: 200
+      objectReference: {fileID: 0}
     - target: {fileID: 1380432746831047339, guid: f52828641954bb6488858b43d61b3b50,
         type: 3}
       propertyPath: m_Name
@@ -821,6 +831,53 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1457781036
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1457781038}
+  - component: {fileID: 1457781037}
+  m_Layer: 0
+  m_Name: BuoyancyCraftsMother
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!114 &1457781037
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1457781036}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0e1266dc125f9f41a3ee51d912e6b55, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObjectToSpawn: {fileID: 4012442588620321539, guid: 407359a7fa0fb364c9b97b077bbd405a,
+    type: 3}
+  ErrorAngle: {x: 0, y: 0, z: 0}
+  SpawningCooldown: 60
+--- !u!4 &1457781038
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1457781036}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -99.8, y: 21.4, z: -107}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1845345306
 GameObject:
   m_ObjectHideFlags: 0
@@ -908,6 +965,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1845345307}
     m_Modifications:
+    - target: {fileID: 1380432745117708771, guid: f52828641954bb6488858b43d61b3b50,
+        type: 3}
+      propertyPath: EffectiveDistance
+      value: 200
+      objectReference: {fileID: 0}
     - target: {fileID: 1380432746831047339, guid: f52828641954bb6488858b43d61b3b50,
         type: 3}
       propertyPath: m_Name

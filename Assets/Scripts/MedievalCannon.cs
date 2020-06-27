@@ -7,16 +7,18 @@ public class MedievalCannon : MonoBehaviour
     public Transform CannonShell;
     public float Velocity = 25;
     public float Timing = 1;
-    public float ShellDestruction = 3;
+    public float ShellDestruction = 5;
     public string FirePointPath = "FirePoint";
     public string VerticalRotationBlock = "IronCannon";
     public string HorizontalRotationBlock = "GunCarriage";
+    public float EffectiveDistance = 100;
 
     private NavyBrig[] _navyAims;
     private float _nestShot;
     private Transform _firePoint;
     private Transform _horizontalBlock;
     private Transform _verticalBlock;
+    private NavyBrig _navalTarget;
 
 
     // Start is called before the first frame update
@@ -32,29 +34,41 @@ public class MedievalCannon : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        NavyBrig navyAim = null;
+        _navalTarget = null;
         _navyAims = FindObjectsOfType<NavyBrig>();
+        float lastDistance = EffectiveDistance;
 
         foreach (NavyBrig navyBrig in _navyAims)
         {
-            if (!navyBrig.IsDead && navyAim == null)
+            if (!navyBrig.IsDead)
             {
-                navyAim = _navyAims[0];
+                float totalDistance = Mathf.Abs(Vector3.Distance(transform.position, navyBrig.transform.position));
+
+                if (totalDistance < lastDistance)
+                {
+                    _navalTarget = navyBrig;
+                    lastDistance = totalDistance;
+                }
             }
         }
 
-        if (navyAim != null)
+        if (_navalTarget != null)
         {
-            Vector3 dir = navyAim.transform.position - _horizontalBlock.position;
-            Vector3 eulerAngles = Quaternion.LookRotation(dir, Vector3.up).eulerAngles;
-            _horizontalBlock.rotation = Quaternion.Euler(new Vector3(0, eulerAngles.y, 0));
+            BoxCollider navalBox = _navalTarget.GetComponent<BoxCollider>();
 
-            Vector3 dir2 = navyAim.transform.position - _verticalBlock.position;
-            Vector3 verticalShift = _verticalBlock.rotation.eulerAngles;
-            verticalShift.x = Quaternion.LookRotation(dir2, Vector3.up).eulerAngles.x;
-            _verticalBlock.rotation = Quaternion.Euler(verticalShift);
+            if (navalBox)
+            {
+                Vector3 dir = navalBox.bounds.center - _horizontalBlock.position;
+                Vector3 eulerAngles = Quaternion.LookRotation(dir, Vector3.up).eulerAngles;
+                _horizontalBlock.rotation = Quaternion.Euler(new Vector3(0, eulerAngles.y, 0));
 
-            FireInTheHole();
+                Vector3 dir2 = navalBox.bounds.center - _verticalBlock.position;
+                Vector3 verticalShift = _verticalBlock.rotation.eulerAngles;
+                verticalShift.x = Quaternion.LookRotation(dir2, Vector3.up).eulerAngles.x;
+                _verticalBlock.rotation = Quaternion.Euler(verticalShift);
+
+                FireInTheHole();
+            }
         }
 
     }
