@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using ArchimedsLab;
+using Assets.Scripts.Guns.MedievalCannon;
 using UnityEngine;
 using UnityEngine.PlayerLoop;
 using Random = UnityEngine.Random;
@@ -17,6 +18,9 @@ public class NavyBrig : MonoBehaviour
     public BillboardHealth HealthCanvas;
     public bool IsDead = false;
 
+    [Header("Military effectiveness")]
+    public ArmorType ArmorType = ArmorType.NonArmored;
+
     private Rigidbody _rb;
     private float _nextAdjust = 0;
     private Animator _animator;
@@ -29,15 +33,6 @@ public class NavyBrig : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-//        _animator = GetComponent<Animator>();
-
-        //        if (!gameObject.GetComponent<Rigidbody>())
-        //        {
-        //           _rb = gameObject.AddComponent<Rigidbody>();
-        //           _rb.velocity = transform.forward * Velocity;
-        //           _rb.useGravity = false;
-        //        }
-        
         /** Water interaction */
         if (!(_rb = GetComponent<Rigidbody>()))
         {
@@ -118,15 +113,6 @@ public class NavyBrig : MonoBehaviour
             Brake();
             AngleDamping();
         }
-
-        if (Input.GetKey(KeyCode.F9))
-        {
-            for (int i = 0; i < 10; i++)
-            {
-
-                Debug.Log("f9 pressed");
-            }
-        }
     }
 
     protected void FixedUpdate()
@@ -195,31 +181,37 @@ public class NavyBrig : MonoBehaviour
             HealthCanvas.TakeDamage(_tmpDamage);
         }
 
-        if (_animator && _healthLevel < 0)
+        if (_healthLevel < 0)
         {
-            this.IsDead = true;
+            IsDead = true;
 
-            _animator.SetBool("break", true);
+            if (_animator)
+            {
+                _animator.SetBool("break", true);
+            }
 
             DecommissionBrig();
         }
-
-////        Debug.Log(Math.Round(Random.value * 50));
-//        if (Math.Round(Random.value * 50) == 5)
-//            _animator.enabled = true;
     }
 
     protected void DecommissionBrig()
     {
-        AnimatorClipInfo[] ac = _animator.GetCurrentAnimatorClipInfo(0);
-
-        if (ac.Length > 0)
+        if (!_animator)
         {
-            Destroy(gameObject, ac[0].clip.length);
+            Destroy(gameObject, 1);
         }
         else
         {
-            Invoke("DecommissionBrig", 1);
+            AnimatorClipInfo[] ac = _animator.GetCurrentAnimatorClipInfo(0);
+
+            if (ac.Length > 0)
+            {
+                Destroy(gameObject, ac[0].clip.length);
+            }
+            else
+            {
+                Invoke("DecommissionBrig", 1);
+            }
         }
     }
 

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04fdc60a4c445e74593fc9dfb194eaac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  RelatedObject: {fileID: 0}
+  RelatedObject: {fileID: 4012442588620321565}
   HealthBar: {fileID: 198596830429015763}
 --- !u!1 &789903734995995546
 GameObject:
@@ -506,6 +506,7 @@ MonoBehaviour:
   MaxAngleShift: 60
   HealthCanvas: {fileID: 4012442588925416304}
   IsDead: 0
+  ArmorType: 2
   TotalMass: 50000
   centerOfMassOffset: {x: 0, y: -10, z: 0}
   BuoyancyMesh: {fileID: 8476526125259111165, guid: e33c9fa1f3d1d4e46b9921e12c46ac8e,

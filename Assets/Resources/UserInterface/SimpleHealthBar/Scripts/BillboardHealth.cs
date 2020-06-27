@@ -21,6 +21,12 @@ public class BillboardHealth : MonoBehaviour
             _camera = _canvas.worldCamera;
         }
 
+        if (!_camera)
+        {
+            _camera = Camera.main;
+            _canvas.worldCamera = _camera;
+        }
+
         if (!_canvas || !_camera)
         {
             Enabled = false;
