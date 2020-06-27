@@ -3,7 +3,37 @@ guid: aa93e676b732dad42962c283d02cbb95
 ModelImporter:
   serializedVersion: 19300
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: 01 - low
+    second: {fileID: 2100000, guid: e82adc3c9483af2498091cd98b0d82bd, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: 02 - mid
+    second: {fileID: 2100000, guid: 3d9cc2f9b9b056c41b492da9777f4935, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: 03 - metal
+    second: {fileID: 2100000, guid: 55d6c38cdfd354a429393dc5c41cf8eb, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: 07 - roof
+    second: {fileID: 2100000, guid: c7beb5106e16d814e8881e19922958b7, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: 08 - pipe
+    second: {fileID: 2100000, guid: cfb0390585d51894e9931bb1d81cf844, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: 09 - 123213
+    second: {fileID: 2100000, guid: bae3ca21dcb07f7459c50aa0b23a6662, type: 2}
   materials:
     materialImportMode: 1
     materialName: 0
