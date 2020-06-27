@@ -101,5 +101,12 @@ namespace Assets.Scripts.Constructions.ConstructionCrane
 
             return Physics.Raycast(cameraRay, out hit, 1000f);
         }
+
+        public bool CastAnyRayFromScreen(Vector3 mousePosition, out RaycastHit hit)
+        {
+            Ray cameraRay = WorldCamera.ScreenPointToRay(mousePosition);
+
+            return Physics.Raycast(cameraRay, out hit, 1000f);
+        }
     }
 }
