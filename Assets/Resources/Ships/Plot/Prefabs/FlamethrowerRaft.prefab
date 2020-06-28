@@ -339,7 +339,7 @@ MonoBehaviour:
   PassCourseTiming: 5
   HealthCanvas: {fileID: 4961752099124382414}
   IsDead: 0
-  ArmorType: 2
+  ArmorType: 1
   TotalMass: 1000
   centerOfMassOffset: {x: 0, y: -10, z: 0}
   BuoyancyMesh: {fileID: 5270879433523947816, guid: b013d8e1259bb14409ef56549a9e3c36,
