@@ -61,7 +61,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 789903734995995546}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -229,7 +229,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: 3940ae9560226f74a943361d4624bf18, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
-  m_ApplyRootMotion: 0
+  m_ApplyRootMotion: 1
   m_LinearVelocityBlending: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
@@ -282,7 +282,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2164505000370933337}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -361,7 +361,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2385947359406297212}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -481,8 +481,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4012442588620321539}
-  - component: {fileID: 4012442588620321565}
   - component: {fileID: 4012442588620321564}
+  - component: {fileID: 1357944115}
   m_Layer: 0
   m_Name: Mothership
   m_TagString: Untagged
@@ -506,30 +506,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4012442588620321565
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4012442588620321538}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8c895dfff0cd859479eca3888b866b91, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  AngleVelocity: 1
-  PassCourseTiming: 5
-  YawAngle: 15
-  EngineMaxRpm: 50000
-  AccelerationStep: 20
-  MaxAngleShift: 60
-  HealthCanvas: {fileID: 4012442588925416304}
-  IsDead: 0
-  TotalMass: 50000
-  centerOfMassOffset: {x: 0, y: -10, z: 0}
-  BuoyancyMesh: {fileID: 8476526125259111165, guid: e33c9fa1f3d1d4e46b9921e12c46ac8e,
-    type: 3}
 --- !u!65 &4012442588620321564
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -541,8 +517,43 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 19.39264, y: 9.758183, z: 57.94259}
-  m_Center: {x: 0.18814087, y: -9.080576, z: -0.02682972}
+  m_Size: {x: 12.978764, y: 9.758183, z: 57.94259}
+  m_Center: {x: -0.8178539, y: -9.080576, z: -0.026828766}
+--- !u!114 &1357944115
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4012442588620321538}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 738cee08976cafd4885766a8da532bd6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AngleVelocity: 1
+  YawAngle: 60
+  AccelerationStep: 20
+  EngineMaxRpm: 30000
+  PassCourseTiming: 10
+  HealthCanvas: {fileID: 4012442588925416304}
+  IsDead: 0
+  ArmorType: 1
+  TotalMass: 30000
+  centerOfMassOffset: {x: 0, y: -10, z: 0}
+  BuoyancyMesh: {fileID: 8476526125259111165, guid: e33c9fa1f3d1d4e46b9921e12c46ac8e,
+    type: 3}
+  InterceptorTransform: {fileID: 6674281782589351766, guid: 0d43219b2c915b8449e4f2b6d18fe4db,
+    type: 3}
+  InterceptorsRate: 3
+  SpawnPosition:
+  - {fileID: 6895880106904023342}
+  - {fileID: 3976354440949563724}
+  - {fileID: 5160774071577378719}
+  - {fileID: 1336232225801292278}
+  - {fileID: 8775731546277598920}
+  - {fileID: 8548418172045565274}
+  SpawnDelay: 2
 --- !u!1 &4401049423753558745
 GameObject:
   m_ObjectHideFlags: 0
@@ -669,7 +680,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4523804359180891140}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -828,7 +839,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7502961224671972678}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -986,7 +997,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7828648626952751884}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
