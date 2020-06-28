@@ -52,7 +52,7 @@ MonoBehaviour:
   PassCourseTiming: 5
   HealthCanvas: {fileID: 0}
   IsDead: 0
-  ArmorType: 2
+  ArmorType: 3
   TotalMass: 10000
   centerOfMassOffset: {x: 0, y: -2, z: 0}
   BuoyancyMesh: {fileID: 4300000, guid: 8ec5d0198ea7e184b91e68ad7a594e05, type: 3}
@@ -95,7 +95,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7222673870514179775}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -0, y: -1.42, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6674281782589351766}

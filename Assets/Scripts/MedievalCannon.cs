@@ -112,6 +112,7 @@ public class MedievalCannon : MonoBehaviour
                 BoxCollider boxCollider = shellInstance.AddComponent<BoxCollider>();
                 boxCollider.isTrigger = true;
                 Vector3 shellDirection = (navalBox.bounds.center - shellInstance.transform.position).normalized;
+                shellInstance.transform.LookAt(navalBox.transform);
 
                 rb.velocity = shellDirection * ProjectileForce;
 
