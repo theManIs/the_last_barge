@@ -48,7 +48,7 @@ MonoBehaviour:
   AngleVelocity: 1
   YawAngle: 15
   AccelerationStep: 20
-  EngineMaxRpm: 50000
+  EngineMaxRpm: 100000
   PassCourseTiming: 5
   HealthCanvas: {fileID: 0}
   IsDead: 0
