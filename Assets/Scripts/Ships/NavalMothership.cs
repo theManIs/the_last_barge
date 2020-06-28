@@ -13,7 +13,7 @@ namespace Assets.Scripts.Ships
         {
             base.Start();
 
-            TmpDamage = 2;
+            TmpDamage = 5;
             InterceptorsDebounce.LockSeconds = InterceptorsRate;
         }
 
