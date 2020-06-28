@@ -6,6 +6,7 @@ public class BillboardHealth : MonoBehaviour
 {
     public NavyBrig RelatedObject;
     public Healthbar HealthBar;
+    public RectTransform[] ArmorShields;
 
     private Camera _camera;
     private Canvas _canvas;
