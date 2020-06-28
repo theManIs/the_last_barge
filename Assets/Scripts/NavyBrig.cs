@@ -3,41 +3,30 @@ using System.Collections;
 using System.Collections.Generic;
 using ArchimedsLab;
 using Assets.Scripts.Guns.MedievalCannon;
+using Assets.Scripts.Ships;
 using UnityEngine;
 using UnityEngine.PlayerLoop;
 using Random = UnityEngine.Random;
 
-public class NavyBrig : MonoBehaviour
+public class NavyBrig : NavalNavigation
 {
-    public float AngleVelocity = 1f;
     public float PassCourseTiming = 5;
-    public float YawAngle = 15;
-    public float EngineMaxRpm = 600;
-    public float AccelerationStep = 20;
-    public float MaxAngleShift = 60;
     public BillboardHealth HealthCanvas;
     public bool IsDead = false;
 
     [Header("Military effectiveness")]
     public ArmorType ArmorType = ArmorType.NonArmored;
 
-    private Rigidbody _rb;
     private float _nextAdjust = 0;
     private Animator _animator;
-    private float _angle = 0;
-    private float _engineRpm = 0;
-    private float _throttle = 0;
     private int _healthLevel = 100;
-    private int _tmpDamage = 5;
+    protected int TmpDamage = 10;
 
     // Start is called before the first frame update
-    void Start()
+    protected void Start()
     {
         /** Water interaction */
-        if (!(_rb = GetComponent<Rigidbody>()))
-        {
-            _rb = gameObject.AddComponent<Rigidbody>();
-        }
+        Rb = GetRigidBody();
 
         if (!GetComponent<MeshCollider>())
         {
@@ -46,12 +35,12 @@ public class NavyBrig : MonoBehaviour
             mc.sharedMesh = BuoyancyMesh;
         }
 
-        if (!_rb)
-            _rb = GetComponent<Rigidbody>();
+        if (!Rb)
+            Rb = GetComponent<Rigidbody>();
 
-        S_centerOfMass = _rb.centerOfMass;
+        S_centerOfMass = Rb.centerOfMass;
         _lastPosition = transform.position;
-        _rb.mass = TotalMass;
+        Rb.mass = TotalMass;
 
         WaterCutter.CookCache(BuoyancyMesh, ref _triangles, ref worldBuffer, ref wetTris, ref dryTris);
         /** Water interaction */
@@ -66,11 +55,15 @@ public class NavyBrig : MonoBehaviour
         _animator = GetComponentInChildren<Animator>();
     }
 
+    private bool _crushCourse = false;
+
     // Update is called once per frame
-    void Update()
+    protected void Update()
     {
         if (!this.IsDead)
         {
+            ChangeCourse();
+
             if (Input.GetKey(KeyCode.A))
                 RudderLeft();
             else if (Input.GetKey(KeyCode.D))
@@ -91,7 +84,7 @@ public class NavyBrig : MonoBehaviour
 
             if (Time.time > _nextAdjust)
             {
-                for (int i = 0; i < MaxAngleShift; i++)
+                for (int i = 0; i < YawAngle; i++)
                 {
                     RudderRight();
                 }
@@ -104,7 +97,6 @@ public class NavyBrig : MonoBehaviour
             }
 
             ThrottleUp();
-            AngleDamping();
             AngleDamping();
 //            FixedUpdate2();
         }
@@ -122,63 +114,13 @@ public class NavyBrig : MonoBehaviour
     }
 
 
-    protected void AddTorque()
+    protected void OnTriggerEnter()
     {
-        _engineRpm = _throttle * EngineMaxRpm;
-        Vector3 speedVector = Quaternion.Euler(0, _angle, 0) * transform.forward * _engineRpm;
-//        _rb.AddForceAtPosition(speedVector, transform.position);
-        _rb.AddForce(speedVector);
-//        Debug.Log($"AddTorque speedVector {speedVector} ");
-    }
-    public void ThrottleUp()
-    {
-        _throttle += AccelerationStep * 0.001F;
-        _throttle = Mathf.Clamp(_throttle, 0f, 1f);
-    }
-
-    public void ThrottleDown()
-    {
-        _throttle -= AccelerationStep * 0.001F;
-        _throttle = Mathf.Clamp(_throttle, -1, 0);
-    }
-
-    public void Brake()
-    {
-        if (_throttle > 0)
-        {
-            _throttle -= AccelerationStep * 0.001F;
-        }
-        else
-        {
-            _throttle += AccelerationStep * 0.001F;
-        }
-    }
-
-    public void RudderRight()
-    {
-        _angle -= AngleVelocity;
-        _angle = Mathf.Clamp(_angle, -1f * YawAngle, YawAngle);
-    }
-
-    public void RudderLeft()
-    {
-        _angle += AngleVelocity;
-        _angle = Mathf.Clamp(_angle, -1f * YawAngle, YawAngle);
-    }
-
-    public void AngleDamping()
-    {
-        _angle = Mathf.Lerp(_angle, 0.0F, 0.02F);
-    }
-
-
-    private void OnTriggerEnter()
-    {
-        _healthLevel -= _tmpDamage;
+        _healthLevel -= TmpDamage;
 
         if (HealthCanvas)
         {
-            HealthCanvas.TakeDamage(_tmpDamage);
+            HealthCanvas.TakeDamage(TmpDamage);
         }
 
         if (_healthLevel < 0)
@@ -216,7 +158,7 @@ public class NavyBrig : MonoBehaviour
     }
 
 
-    public int TotalMass = 70000;
+    public int TotalMass = 30000;
     public Vector3 centerOfMassOffset = new Vector3(0F, 0F, 0F);
     Vector3 S_centerOfMass;
     public Mesh BuoyancyMesh;
@@ -242,33 +184,33 @@ public class NavyBrig : MonoBehaviour
     protected void FixedUpdate2()
     {
     #if UNITY_EDITOR
-        if (_rb.centerOfMass != S_centerOfMass + centerOfMassOffset)
-                _rb.centerOfMass = S_centerOfMass + centerOfMassOffset;
+        if (Rb.centerOfMass != S_centerOfMass + centerOfMassOffset)
+                Rb.centerOfMass = S_centerOfMass + centerOfMassOffset;
     #endif
 
         Vector3 speedVector = (transform.position - _lastPosition) / Time.deltaTime;
         _lastPosition = transform.position;
 
-        if (_rb.IsSleeping())
+        if (Rb.IsSleeping())
             return;
 
         WaterCutter.CookMesh(transform.position, transform.rotation, ref _triangles, ref worldBuffer);
 
         WaterCutter.SplitMesh(worldBuffer, ref wetTris, ref dryTris, out nbrWet, out nbrDry, realist);
-        Archimeds.ComputeAllForces(wetTris, dryTris, nbrWet, nbrDry, speedVector, _rb);
+        Archimeds.ComputeAllForces(wetTris, dryTris, nbrWet, nbrDry, speedVector, Rb);
     }
 
 #if UNITY_EDITOR
     //Some visualizations for this buoyancy script.
     protected void OnDrawGizmos()
     {
-        if (_rb)
+        if (Rb)
         {
             if (!Application.isPlaying)
                 return;
 
             Gizmos.color = Color.black;
-            Gizmos.DrawWireSphere(_rb.worldCenterOfMass, 0.25F);
+            Gizmos.DrawWireSphere(Rb.worldCenterOfMass, 0.25F);
 
             Gizmos.color = Color.blue;
             for (uint i = 0; i < nbrWet; i++)

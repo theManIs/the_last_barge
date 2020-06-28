@@ -333,11 +333,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AngleVelocity: 1
-  PassCourseTiming: 5
-  YawAngle: 15
-  EngineMaxRpm: 1000
+  YawAngle: 60
   AccelerationStep: 20
-  MaxAngleShift: 60
+  EngineMaxRpm: 2000
+  PassCourseTiming: 5
   HealthCanvas: {fileID: 4961752099124382414}
   IsDead: 0
   ArmorType: 2
