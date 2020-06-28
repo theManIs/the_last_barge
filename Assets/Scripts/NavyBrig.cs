@@ -15,7 +15,9 @@ public class NavyBrig : NavalNavigation
     public bool IsDead = false;
 
     [Header("Military effectiveness")]
-    public ArmorType ArmorType = ArmorType.NonArmored;
+    public ArmorType ShipArmorType = ArmorType.NonArmored;
+
+    public int ArmorQuantity = 0;
 
     private float _nextAdjust = 0;
     private Animator _animator;
@@ -49,6 +51,15 @@ public class NavyBrig : NavalNavigation
         if (HealthCanvas)
         {
             HealthCanvas.SetHealth(_healthLevel);
+
+            if (ShipArmorType == ArmorType.Armored)
+            {
+                HealthCanvas.DisableArmorAmount(3 - ArmorQuantity); 
+            }
+            else
+            {
+                HealthCanvas.DisableArmorAmount(3);
+            }
         }
         /** Health display */
 
@@ -133,6 +144,12 @@ public class NavyBrig : NavalNavigation
             }
 
             DecommissionBrig();
+
+            if (HealthCanvas)
+            {
+                HealthCanvas.DisableHealthBar();
+                HealthCanvas.DisableArmorAmount(3);
+            }
         }
     }
 

@@ -81,7 +81,7 @@ public class MedievalCannon : MonoBehaviour
         {
             if (!navyBrig.IsDead)
             {
-                if (navyBrig.ArmorType == preferredArmor || ArmorType.Indifference == preferredArmor)
+                if (navyBrig.ShipArmorType == preferredArmor || ArmorType.Indifference == preferredArmor)
                 {
                     float totalDistance = Mathf.Abs(Vector3.Distance(transform.position, navyBrig.transform.position));
 

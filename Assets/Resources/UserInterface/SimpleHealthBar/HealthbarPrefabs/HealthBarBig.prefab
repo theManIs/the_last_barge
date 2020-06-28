@@ -183,9 +183,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04fdc60a4c445e74593fc9dfb194eaac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  RelatedObject: {fileID: 0}
   HealthBar: {fileID: 1357228422564830642}
-  ArmorShields: []
+  ArmorShields:
+  - {fileID: 6040320019525977168}
+  - {fileID: 6522849965589103350}
+  - {fileID: 1791414986879788489}
 --- !u!1 &1388471080717493124
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,10 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class BillboardHealth : MonoBehaviour
 {
-    public NavyBrig RelatedObject;
     public Healthbar HealthBar;
     public RectTransform[] ArmorShields;
 
@@ -31,6 +31,38 @@ public class BillboardHealth : MonoBehaviour
         if (!_canvas || !_camera)
         {
             Enabled = false;
+        }
+    }
+
+    public void DisableHealthBar()
+    {
+        if (HealthBar)
+        {
+            HealthBar.gameObject.SetActive(false);
+        }
+    }
+
+    public void DisableArmorAmount(int armorCount)
+    {
+        for (int i = 0; i < armorCount; i++)
+        {
+//            Debug.Log(i);
+            DisableArmor(i);
+        }
+    }
+
+    public void DisableArmor(int armorIndex)
+    {
+        Image img = null;
+
+        if (ArmorShields.Length > armorIndex)
+        {
+            img = ArmorShields[armorIndex].GetComponent<Image>();
+        }
+
+        if (img != null)
+        {
+            img.enabled = false;
         }
     }
 
