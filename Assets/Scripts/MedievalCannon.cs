@@ -1,22 +1,31 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Assets.Scripts.Guns.MedievalCannon;
 using UnityEngine;
 
 public class MedievalCannon : MonoBehaviour
 {
+    [Header("Main characteristics")]
     public Transform CannonShell;
-    public float Velocity = 25;
-    public float Timing = 1;
-    public float ShellDestruction = 3;
     public string FirePointPath = "FirePoint";
     public string VerticalRotationBlock = "IronCannon";
     public string HorizontalRotationBlock = "GunCarriage";
+
+
+    [Header("BarrelEffectiveness")]
+    public float ShellDestruction = 5;
+    public float ProjectileForce = 25;
+    public float EffectiveDistance = 100;
+    public float SecCooldown = 1;
+    public ArmorType PreferredTarget = ArmorType.NonArmored;
+
 
     private NavyBrig[] _navyAims;
     private float _nestShot;
     private Transform _firePoint;
     private Transform _horizontalBlock;
     private Transform _verticalBlock;
+    private NavyBrig _navalTarget;
 
 
     // Start is called before the first frame update
@@ -32,38 +41,69 @@ public class MedievalCannon : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        NavyBrig navyAim = null;
+        _navalTarget = null;
         _navyAims = FindObjectsOfType<NavyBrig>();
 
-        foreach (NavyBrig navyBrig in _navyAims)
+        _navalTarget = FindNavalTarget(_navyAims, PreferredTarget);
+
+        if (_navalTarget == null)
         {
-            if (!navyBrig.IsDead && navyAim == null)
+            _navalTarget = FindNavalTarget(_navyAims, ArmorType.Indifference);
+        }
+
+        if (_navalTarget != null)
+        {
+            BoxCollider navalBox = _navalTarget.GetComponent<BoxCollider>();
+
+            if (navalBox)
             {
-                navyAim = _navyAims[0];
+                Vector3 dir = navalBox.bounds.center - _horizontalBlock.position;
+                Vector3 eulerAngles = Quaternion.LookRotation(dir, Vector3.up).eulerAngles;
+                _horizontalBlock.rotation = Quaternion.Euler(new Vector3(0, eulerAngles.y, 0));
+
+                Vector3 dir2 = navalBox.bounds.center - _verticalBlock.position;
+                Vector3 verticalShift = _verticalBlock.rotation.eulerAngles;
+                verticalShift.x = Quaternion.LookRotation(dir2, Vector3.up).eulerAngles.x;
+                _verticalBlock.rotation = Quaternion.Euler(verticalShift);
+
+                FireInTheHole();
             }
         }
 
-        if (navyAim != null)
+    }
+
+    protected NavyBrig FindNavalTarget(NavyBrig[] navalAims, ArmorType preferredArmor)
+    {
+        float lastDistance = EffectiveDistance;
+        NavyBrig navalTarget = null;
+
+        foreach (NavyBrig navyBrig in navalAims)
         {
-            Vector3 dir = navyAim.transform.position - _horizontalBlock.position;
-            Vector3 eulerAngles = Quaternion.LookRotation(dir, Vector3.up).eulerAngles;
-            _horizontalBlock.rotation = Quaternion.Euler(new Vector3(0, eulerAngles.y, 0));
+            if (!navyBrig.IsDead)
+            {
+                if (navyBrig.ShipArmorType == preferredArmor || ArmorType.Indifference == preferredArmor)
+                {
+                    float totalDistance = Mathf.Abs(Vector3.Distance(transform.position, navyBrig.transform.position));
 
-            Vector3 dir2 = navyAim.transform.position - _verticalBlock.position;
-            Vector3 verticalShift = _verticalBlock.rotation.eulerAngles;
-            verticalShift.x = Quaternion.LookRotation(dir2, Vector3.up).eulerAngles.x;
-            _verticalBlock.rotation = Quaternion.Euler(verticalShift);
-
-            FireInTheHole();
+                    if (totalDistance < lastDistance)
+                    {
+                        navalTarget = navyBrig;
+                        lastDistance = totalDistance;
+                    }
+                }
+            }
         }
 
+        return navalTarget;
     }
 
     private void FireInTheHole()
     {
         if (Time.time > _nestShot)
         {
-            if (CannonShell)
+            BoxCollider navalBox = _navalTarget.GetComponent<BoxCollider>();
+
+            if (CannonShell && navalBox)
             {
                 GameObject shellInstance = Instantiate(CannonShell.gameObject, _firePoint);
                 Rigidbody rb = shellInstance.GetComponent<Rigidbody>();
@@ -71,13 +111,15 @@ public class MedievalCannon : MonoBehaviour
                 rb.useGravity = false;
                 BoxCollider boxCollider = shellInstance.AddComponent<BoxCollider>();
                 boxCollider.isTrigger = true;
+                Vector3 shellDirection = (navalBox.bounds.center - shellInstance.transform.position).normalized;
+                shellInstance.transform.LookAt(navalBox.transform);
 
-                rb.velocity = _verticalBlock.forward * Velocity;
+                rb.velocity = shellDirection * ProjectileForce;
 
                 Destroy(shellInstance, ShellDestruction);
             }
 
-            _nestShot = Time.time + Timing;
+            _nestShot = Time.time + SecCooldown;
         }
     }
 

@@ -33,24 +33,24 @@ public class ConstructionCrane : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKey(KeyCode.Mouse0) && _frameLockerSoft < 0)
-        {
-            if (CastRayFromScreen(out RaycastHit hit) && hit.transform.name == TargetObjectName && !LockedThing)
-            {
-//                Debug.Log(hit.transform.name);
-
-                if (AvailableBuildings.Length > 0)
-                {
-                    LockedThing = true;
-                    CurrentBuilding = _ccm.SpawnBuilding(AvailableBuildings[0]);
-
-                    ApplyLayer(CurrentBuilding, 2);
-                }
-//                SpawnBuilding();
-
-                _frameLockerSoft = _frameLockerHard;
-            }
-        }
+//        if (Input.GetKey(KeyCode.Mouse0) && _frameLockerSoft < 0)
+//        {
+//            if (CastRayFromScreen(out RaycastHit hit) && hit.transform.name == TargetObjectName && !LockedThing)
+//            {
+////                Debug.Log(hit.transform.name);
+//
+//                if (AvailableBuildings.Length > 0)
+//                {
+//                    LockedThing = true;
+//                    CurrentBuilding = _ccm.SpawnBuilding(AvailableBuildings[0]);
+//
+//                    ApplyLayer(CurrentBuilding, 2);
+//                }
+////                SpawnBuilding();
+//
+//                _frameLockerSoft = _frameLockerHard;
+//            }
+//        }
 
         if (Input.GetKey(KeyCode.Mouse0) && LockedThing && _frameLockerSoft < 0)
         {
@@ -209,3 +209,8 @@ public class ConstructionCrane : MonoBehaviour
         return Physics.Raycast(cameraRay, out hit, 1000f);
     }
 }
+
+//todo 1. Сделать строительство рандомных объектов с выбором из меню объектов. Меню объектов вызывается правой кнопкой.
+//todo 2. Сделать движение по карте мира. Уменьшение индикатора хлама.
+//todo 3. Сцена со сбором мусора из воды. Индикатор и маркер.
+//todo 4. Сцена с защитой от кораблей
