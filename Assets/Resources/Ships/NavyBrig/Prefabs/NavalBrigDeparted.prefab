@@ -1,19 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &2075355252
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 977666661}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 04fdc60a4c445e74593fc9dfb194eaac, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  RelatedObject: {fileID: 405726550}
-  HealthBar: {fileID: 114595396475566601}
 --- !u!1 &2176120402600883212
 GameObject:
   m_ObjectHideFlags: 0
@@ -208,13 +194,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AngleVelocity: 1
-  PassCourseTiming: 5
   YawAngle: 15
-  EngineMaxRpm: 200000
   AccelerationStep: 100
-  MaxAngleShift: 60
-  HealthCanvas: {fileID: 2075355252}
+  EngineMaxRpm: 200000
+  PassCourseTiming: 5
+  HealthCanvas: {fileID: 8080074953899674991}
   IsDead: 0
+  ArmorType: 2
   TotalMass: 50000
   centerOfMassOffset: {x: 0, y: -2, z: 0}
   BuoyancyMesh: {fileID: -8853556785008090690, guid: cdb93641082564945913fddaaebde18e,
@@ -521,37 +507,31 @@ PrefabInstance:
     - target: {fileID: 4028098117813876196, guid: db7edf3c445e204438daa9354e838c9e,
         type: 3}
       propertyPath: m_AnchorMax.x
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4028098117813876196, guid: db7edf3c445e204438daa9354e838c9e,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: db7edf3c445e204438daa9354e838c9e, type: 3}
---- !u!1 &977666661 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3817256305335535044, guid: db7edf3c445e204438daa9354e838c9e,
-    type: 3}
-  m_PrefabInstance: {fileID: 3817256305775806369}
-  m_PrefabAsset: {fileID: 0}
 --- !u!224 &977666662 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3817256305335535047, guid: db7edf3c445e204438daa9354e838c9e,
     type: 3}
   m_PrefabInstance: {fileID: 3817256305775806369}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &114595396475566601 stripped
+--- !u!114 &8080074953899674991 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3850157140781120936, guid: db7edf3c445e204438daa9354e838c9e,
+  m_CorrespondingSourceObject: {fileID: 4961752099124382414, guid: db7edf3c445e204438daa9354e838c9e,
     type: 3}
   m_PrefabInstance: {fileID: 3817256305775806369}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3ee56578d4c29be43886fa650bda94d6, type: 3}
+  m_Script: {fileID: 11500000, guid: 04fdc60a4c445e74593fc9dfb194eaac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &114647762435177581 stripped
