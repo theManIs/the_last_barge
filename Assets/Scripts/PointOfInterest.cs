@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Numerics;
 using UnityEngine;
 using UnityEngine.UIElements;
+using Button = UnityEngine.UI.Button;
 using Quaternion = UnityEngine.Quaternion;
 using Vector3 = UnityEngine.Vector3;
 
@@ -13,6 +14,7 @@ public class PointOfInterest : MonoBehaviour
     public Vector3 ImageExtents = Vector3.zero;
     public Transform ConfirmWindow;
     public MapRandomizer ParentMapRandomizer;
+    public string SceneToLoad = "Scenes/BuildingScene";
 
     protected Vector3 NewScale = Vector3.one;
     protected Transform PointDescrObject;
@@ -103,14 +105,31 @@ public class PointOfInterest : MonoBehaviour
         {
             ConfirmWindow.gameObject.SetActive(true);
 
-            if (ConfirmWindow.GetComponent<ConfirmWindow>())
+            ParentMapRandomizer.ReleaseModal = false;
+            ParentMapRandomizer.OverPoint = this;
+
+//            Transform confirmWindowObject = PointDescription.transform.Find("YesNoPanel/Yes");
+
+//            confirmWindowObject.gameObject.GetComponent<Button>().onClick.AddListener(OnClickConfirmButton);
+
+            foreach (Button butYesNo in ConfirmWindow.gameObject.GetComponentsInChildren<Button>())
             {
-                ConfirmWindow.GetComponent<ConfirmWindow>().ParentPointOfInterest = this;
-                ParentMapRandomizer.ReleaseModal = false;
+                butYesNo.onClick.AddListener(OnClickConfirmButton);
             }
 
-            OnMouseExit();
         }
+    }
+
+    public void OnClickConfirmButton()
+    {
+        if (ParentMapRandomizer)
+        {
+            ParentMapRandomizer.ReleaseModal = true;
+            OnMouseExit();
+            ParentMapRandomizer.MoveBargeToPosition(transform.position);
+        }
+
+        ConfirmWindow.gameObject.SetActive(false);
     }
 
     void OnMouseDownWorldCoordinates()
@@ -128,11 +147,11 @@ public class PointOfInterest : MonoBehaviour
                 ConfirmWindowObject.position = posShift;
             }
 
-            if (ConfirmWindowObject.GetComponent<ConfirmWindow>())
-            {
-                ConfirmWindowObject.GetComponent<ConfirmWindow>().ParentPointOfInterest = this;
-                ParentMapRandomizer.ReleaseModal = false;
-            }
+//            if (ConfirmWindowObject.GetComponent<ConfirmWindow>())
+//            {
+//                ConfirmWindowObject.GetComponent<ConfirmWindow>().ParentPointOfInterest = this;
+//                ParentMapRandomizer.ReleaseModal = false;
+//            }
 
             OnMouseExit();
         }

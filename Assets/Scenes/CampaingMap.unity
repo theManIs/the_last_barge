@@ -171,6 +171,7 @@ MonoBehaviour:
   ImageExtents: {x: 4.5, y: -3, z: 0}
   ConfirmWindow: {fileID: 1158982838}
   ParentMapRandomizer: {fileID: 0}
+  SceneToLoad: Scenes/BuildingScene
 --- !u!212 &172603821
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -347,6 +348,7 @@ MonoBehaviour:
   ImageExtents: {x: 4.5, y: -3, z: 0}
   ConfirmWindow: {fileID: 1158982838}
   ParentMapRandomizer: {fileID: 0}
+  SceneToLoad: Scenes/BuildingScene
 --- !u!61 &322419090
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -423,6 +425,7 @@ MonoBehaviour:
   ImageExtents: {x: 4.5, y: -3, z: 0}
   ConfirmWindow: {fileID: 1158982838}
   ParentMapRandomizer: {fileID: 0}
+  SceneToLoad: Scenes/BuildingScene
 --- !u!212 &416624019
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -714,6 +717,12 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 1732039678}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &984961569 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7297458347754768176, guid: 31f99d06706cb6f4d9c375ed340e7526,
+    type: 3}
+  m_PrefabInstance: {fileID: 1732039678}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &995720133
 GameObject:
   m_ObjectHideFlags: 0
@@ -814,6 +823,7 @@ MonoBehaviour:
   ImageExtents: {x: 4.5, y: -3, z: 0}
   ConfirmWindow: {fileID: 1158982838}
   ParentMapRandomizer: {fileID: 0}
+  SceneToLoad: Scenes/BuildingScene
 --- !u!61 &995720137
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -940,6 +950,7 @@ MonoBehaviour:
   ImageExtents: {x: 4.5, y: -3, z: 0}
   ConfirmWindow: {fileID: 1158982838}
   ParentMapRandomizer: {fileID: 0}
+  SceneToLoad: Scenes/BuildingScene
 --- !u!61 &1001995179
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1066,6 +1077,7 @@ MonoBehaviour:
   ImageExtents: {x: 4.5, y: -3, z: 0}
   ConfirmWindow: {fileID: 1158982838}
   ParentMapRandomizer: {fileID: 0}
+  SceneToLoad: Scenes/BuildingScene
 --- !u!61 &1010252210
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1220,18 +1232,6 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 1732039678}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1158982839 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2539699241932227835, guid: 31f99d06706cb6f4d9c375ed340e7526,
-    type: 3}
-  m_PrefabInstance: {fileID: 1732039678}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5c013462767c20a4b9be31a6fa24e9b7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1316113575
 GameObject:
   m_ObjectHideFlags: 0
@@ -1346,6 +1346,7 @@ MonoBehaviour:
   ClosestToPoint: 0.25
   MainlineCamera: {fileID: 644963464}
   CameraSpeed: 0.1
+  OverPoint: {fileID: 0}
 --- !u!4 &1487459745
 Transform:
   m_ObjectHideFlags: 0
@@ -1470,6 +1471,7 @@ MonoBehaviour:
   ImageExtents: {x: 4.5, y: -3, z: 0}
   ConfirmWindow: {fileID: 1158982838}
   ParentMapRandomizer: {fileID: 0}
+  SceneToLoad: Scenes/BuildingScene
 --- !u!61 &1625062916
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1562,11 +1564,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1158982839}
+      objectReference: {fileID: 984961569}
     - target: {fileID: 7297458347744241054, guid: 31f99d06706cb6f4d9c375ed340e7526,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: OnClickConfirmButton
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 7297458347744241054, guid: 31f99d06706cb6f4d9c375ed340e7526,
         type: 3}
@@ -1607,11 +1609,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1158982839}
+      objectReference: {fileID: 984961569}
     - target: {fileID: 7297458348626638822, guid: 31f99d06706cb6f4d9c375ed340e7526,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: OnClickConfirmButton
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 7297458348626638822, guid: 31f99d06706cb6f4d9c375ed340e7526,
         type: 3}
@@ -1673,7 +1675,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 2539699241932227835, guid: 31f99d06706cb6f4d9c375ed340e7526, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 31f99d06706cb6f4d9c375ed340e7526, type: 3}
 --- !u!1 &1814679689
 GameObject:
@@ -1775,6 +1778,7 @@ MonoBehaviour:
   ImageExtents: {x: 4.5, y: -3, z: 0}
   ConfirmWindow: {fileID: 1158982838}
   ParentMapRandomizer: {fileID: 0}
+  SceneToLoad: Scenes/BuildingScene
 --- !u!61 &1814679693
 BoxCollider2D:
   m_ObjectHideFlags: 0
