@@ -1214,31 +1214,24 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 51.728, y: 128.96701, z: 120.69301}
---- !u!1 &1158982837 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7297458347321431788, guid: 31f99d06706cb6f4d9c375ed340e7526,
-    type: 3}
-  m_PrefabInstance: {fileID: 1732039678}
-  m_PrefabAsset: {fileID: 0}
 --- !u!224 &1158982838 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7297458347321431791, guid: 31f99d06706cb6f4d9c375ed340e7526,
     type: 3}
   m_PrefabInstance: {fileID: 1732039678}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1158982839
+--- !u!114 &1158982839 stripped
 MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 2539699241932227835, guid: 31f99d06706cb6f4d9c375ed340e7526,
+    type: 3}
+  m_PrefabInstance: {fileID: 1732039678}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1158982837}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5c013462767c20a4b9be31a6fa24e9b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ParentPointOfInterest: {fileID: 0}
 --- !u!1 &1316113575
 GameObject:
   m_ObjectHideFlags: 0
@@ -1515,6 +1508,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: CanvasWorldMap
       objectReference: {fileID: 0}
+    - target: {fileID: 7297458347308620296, guid: 31f99d06706cb6f4d9c375ed340e7526,
+        type: 3}
+      propertyPath: m_Texture
+      value: 
+      objectReference: {fileID: 2800000, guid: b90c8d5cf732e204ba120a4717a0cb86, type: 3}
     - target: {fileID: 7297458347321431788, guid: 31f99d06706cb6f4d9c375ed340e7526,
         type: 3}
       propertyPath: m_IsActive
