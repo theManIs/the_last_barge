@@ -16,6 +16,10 @@ public class MapRandomizer : MonoBehaviour
     public bool ReleaseModal = true;
     public bool BigState = false;
     public Transform BargeTransform;
+    public Transform RubbishGauge;
+    public float ClosestToPoint = 0.25f;
+    public Camera MainlineCamera;
+    public float CameraSpeed = 0.1f;
 
     protected float MapExtentX;
     protected float MapExtentY;
@@ -23,6 +27,10 @@ public class MapRandomizer : MonoBehaviour
     protected FrameLocker TimeWaiter = new FrameLocker();
     protected Vector3 NewPosition = new Vector3();
     protected Vector3 NewBargePosition;
+    protected float MapCameraMinY;
+    protected float MapCameraMaxY;
+    protected float MapCameraMinX;
+    protected float MapCameraMaxX;
 
     #endregion
 
@@ -45,7 +53,9 @@ public class MapRandomizer : MonoBehaviour
             }
         }
 
-        Debug.Log(MapExtentX + " " + MapExtentY);
+        SetCameraBounds();
+
+//        Debug.Log(MapExtentX + " " + MapExtentY);
 
         TimeWaiter.LockSeconds = ResetTime;
 
@@ -78,8 +88,61 @@ public class MapRandomizer : MonoBehaviour
         if (BargeTransform)
         {
             BargeTransform.position = Vector3.Lerp(BargeTransform.position, NewBargePosition, Time.deltaTime);
+
+            if (RubbishGauge.GetComponent<RubbishGauge>())
+            {
+                float closestDistanceToPoint = (NewBargePosition - BargeTransform.position).sqrMagnitude;
+
+                if (closestDistanceToPoint > ClosestToPoint * ClosestToPoint)
+                {
+                    RubbishGauge.GetComponent<RubbishGauge>().EngageGauge = true;
+                }
+                else
+                {
+                    RubbishGauge.GetComponent<RubbishGauge>().EngageGauge = false;
+                }
+            }
         }
-    } 
+
+        MoveCamera();
+    }
+
+    protected void MoveCamera()
+    {
+        if (MainlineCamera)
+        {
+            if (Mathf.Abs(Input.GetAxis("Vertical") + Input.GetAxis("Horizontal")) > 0f)
+            {
+                Vector3 oldCameraPosition = MainlineCamera.transform.position;
+                oldCameraPosition.y += Input.GetAxis("Vertical");
+                oldCameraPosition.y = Mathf.Clamp(oldCameraPosition.y, MapCameraMinY, MapCameraMaxY);
+                oldCameraPosition.x += Input.GetAxis("Horizontal");
+                oldCameraPosition.x = Mathf.Clamp(oldCameraPosition.x, MapCameraMinX, MapCameraMaxX);
+                MainlineCamera.transform.position = Vector3.Lerp(MainlineCamera.transform.position, oldCameraPosition, CameraSpeed);
+            }
+        }
+    }
+
+    protected void SetCameraBounds()
+    {
+        SpriteRenderer mapSprite = MapPicture.GetComponent<SpriteRenderer>();
+
+
+        if (mapSprite && MainlineCamera)
+        {
+            Vector3 zeroVector3 = Vector3.zero;
+            zeroVector3.z = mapSprite.transform.position.z - MainlineCamera.transform.position.z;
+            Vector3 worldScreenMin = MainlineCamera.ScreenToWorldPoint(zeroVector3);
+            zeroVector3.y = Screen.height;
+            zeroVector3.x = Screen.width;
+            Vector3 worldScreenMax = MainlineCamera.ScreenToWorldPoint(zeroVector3);
+
+            MapCameraMinY = (mapSprite.bounds.min.y - worldScreenMin.y) + MainlineCamera.transform.position.y;
+            MapCameraMaxY = (mapSprite.bounds.max.y - worldScreenMax.y) + MainlineCamera.transform.position.y;
+            MapCameraMaxX = (mapSprite.bounds.max.x - worldScreenMax.x) + MainlineCamera.transform.position.x;
+            MapCameraMinX = (mapSprite.bounds.min.x - worldScreenMin.x) + MainlineCamera.transform.position.x;
+        }
+    }
 
     #endregion
 

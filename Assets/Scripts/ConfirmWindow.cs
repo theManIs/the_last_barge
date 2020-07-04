@@ -15,6 +15,6 @@ public class ConfirmWindow : MonoBehaviour
             ParentPointOfInterest.ParentMapRandomizer.MoveBargeToPosition(ParentPointOfInterest.transform.position);
         }
 
-        Destroy(gameObject);
+        gameObject.SetActive(false);
     }
 }

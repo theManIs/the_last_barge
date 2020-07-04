@@ -18,7 +18,7 @@ public class PointOfInterest : MonoBehaviour
     protected Transform PointDescrObject;
     protected Transform ConfirmWindowObject;
 
-    void OnMouseEnter()
+    void OnMouseEnterWorldCoordinates()
     {
         if (ParentMapRandomizer && ParentMapRandomizer.ReleaseModal)
         {
@@ -43,7 +43,41 @@ public class PointOfInterest : MonoBehaviour
         }
     }
 
+    protected void OnMouseEnter()
+    {
+        if (ParentMapRandomizer && ParentMapRandomizer.ReleaseModal)
+        {
+            Vector3 ls = transform.localScale;
+            NewScale.x = ls.x * RescaleMod.x;
+            NewScale.y = ls.y * RescaleMod.y;
+            NewScale.z = ls.z * RescaleMod.z;
+
+            transform.localScale = NewScale;
+
+            PointDescription.gameObject.SetActive(true);
+
+            ParentMapRandomizer.BigState = true;
+        }
+    }
+
     public void OnMouseExit()
+    {
+        if (ParentMapRandomizer && ParentMapRandomizer.BigState && ParentMapRandomizer.ReleaseModal)
+        {
+            Vector3 ls = transform.localScale;
+            NewScale.x = ls.x / RescaleMod.x;
+            NewScale.y = ls.y / RescaleMod.y;
+            NewScale.z = ls.z / RescaleMod.z;
+
+            transform.localScale = NewScale;
+
+            PointDescription.gameObject.SetActive(false);
+
+            ParentMapRandomizer.BigState = false;
+        }
+    }
+
+    public void OnMouseExitWorldCoordinates()
     {
         if (ParentMapRandomizer && ParentMapRandomizer.BigState && ParentMapRandomizer.ReleaseModal)
         {
@@ -64,6 +98,22 @@ public class PointOfInterest : MonoBehaviour
     }
 
     void OnMouseDown()
+    {
+        if (ParentMapRandomizer && ParentMapRandomizer && ParentMapRandomizer.ReleaseModal)
+        {
+            ConfirmWindow.gameObject.SetActive(true);
+
+            if (ConfirmWindow.GetComponent<ConfirmWindow>())
+            {
+                ConfirmWindow.GetComponent<ConfirmWindow>().ParentPointOfInterest = this;
+                ParentMapRandomizer.ReleaseModal = false;
+            }
+
+            OnMouseExit();
+        }
+    }
+
+    void OnMouseDownWorldCoordinates()
     {
         if (ParentMapRandomizer && ParentMapRandomizer && ParentMapRandomizer.ReleaseModal)
         {
