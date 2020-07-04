@@ -22,7 +22,8 @@ public class RubbishGauge : MonoBehaviour
             {
                 if (GaugeArrow.transform.rotation.eulerAngles.z > LowBarAngle && GaugeArrow.transform.rotation.eulerAngles.z < HighBarAngle)
                 {
-                    GaugeArrow.transform.RotateAround(ArrowRotationPoint.transform.position, Vector3.forward, 1 * Time.deltaTime);
+                    GaugeArrow.transform.Rotate(Vector3.forward, 1 * Time.deltaTime);
+//                    GaugeArrow.transform.RotateAround(ArrowRotationPoint.transform.position, Vector3.forward, 1 * Time.deltaTime);
                 }
             }
         }
