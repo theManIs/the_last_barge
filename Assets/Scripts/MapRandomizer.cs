@@ -22,6 +22,7 @@ public class MapRandomizer : MonoBehaviour
     public Camera MainlineCamera;
     public float CameraSpeed = 0.1f;
     public PointOfInterest OverPoint;
+    public PointOfInterest HoverPoint;
 
     protected float MapExtentX;
     protected float MapExtentY;
@@ -117,6 +118,25 @@ public class MapRandomizer : MonoBehaviour
 
 
         MoveCamera();
+
+        if (Input.GetKey(KeyCode.Mouse1))
+        {
+            OnRightMouse();
+        } 
+    }
+
+    protected void OnRightMouse()
+    {
+        if (HoverPoint)
+        {
+            HoverPoint.OnMouseExit();
+        }
+
+        if (OverPoint)
+        {
+            OverPoint.DeactivateConfirm();
+            OverPoint.OnMouseExit();
+        }
     }
 
     protected void LoadScene()
