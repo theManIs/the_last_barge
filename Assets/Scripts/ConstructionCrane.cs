@@ -14,6 +14,7 @@ public class ConstructionCrane : MonoBehaviour
     public Material BadConstructionMaterial;
     public Transform CentralBarge;
     public ResourceStack ResourcesInStoke;
+    public CraneBridgeProxy CraneBridgeProxy;
 
     private int _frameLockerSoft = 0;
     private int _frameLockerHard = 25;
@@ -33,24 +34,31 @@ public class ConstructionCrane : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-//        if (Input.GetKey(KeyCode.Mouse0) && _frameLockerSoft < 0)
-//        {
-//            if (CastRayFromScreen(out RaycastHit hit) && hit.transform.name == TargetObjectName && !LockedThing)
-//            {
-////                Debug.Log(hit.transform.name);
-//
-//                if (AvailableBuildings.Length > 0)
-//                {
-//                    LockedThing = true;
-//                    CurrentBuilding = _ccm.SpawnBuilding(AvailableBuildings[0]);
-//
-//                    ApplyLayer(CurrentBuilding, 2);
-//                }
-////                SpawnBuilding();
-//
-//                _frameLockerSoft = _frameLockerHard;
-//            }
-//        }
+        if (CraneBridgeProxy && CraneBridgeProxy.StartBuilding && _frameLockerSoft < 0)
+        {
+            CraneBridgeProxy.StartBuilding = false;
+
+            if (CastRayFromScreen(out RaycastHit hit) && !LockedThing)
+            {
+//                Debug.Log(hit.transform.name);
+
+                if (AvailableBuildings.Length > 0)
+                {
+                    LockedThing = true;
+                    CurrentBuilding = _ccm.SpawnBuilding(AvailableBuildings[0]);
+
+                    ApplyLayer(CurrentBuilding, 2);
+                }
+//                SpawnBuilding();
+
+                _frameLockerSoft = _frameLockerHard;
+            }
+        }
+
+        if (Input.GetKey(KeyCode.Mouse1))
+        {
+            RefuseBuild();
+        }
 
         if (Input.GetKey(KeyCode.Mouse0) && LockedThing && _frameLockerSoft < 0)
         {
@@ -72,7 +80,7 @@ public class ConstructionCrane : MonoBehaviour
             _canBuild = _ccm.CanBeBuilt(CurrentBuilding);
             _canBuild = !_ccm.DoesTouchTheBarge(CentralBarge, CurrentBuilding) && _canBuild;
             _canBuild = _ccm.DoesTouchBuildingZone(LayerMask.NameToLayer("BuildingZone")) && _canBuild;
-            _canBuild = ResourcesInStoke && ResourcesInStoke.StackSize > 0 && _canBuild;
+            _canBuild = (ResourcesInStoke && ResourcesInStoke.StackSize > 0 || !ResourcesInStoke) && _canBuild;
             
             if (!_canBuild && BadConstructionMaterial)
             {
@@ -104,6 +112,17 @@ public class ConstructionCrane : MonoBehaviour
         }
     }
 
+    protected void RefuseBuild()
+    {
+        if (CurrentBuilding && CurrentBuilding.gameObject)
+        {
+            Destroy(CurrentBuilding.gameObject);
+        }
+
+        CurrentBuilding = null;
+        LockedThing = false;
+    }
+
     protected void BuildOne()
     {
         if (_canBuild)
@@ -113,7 +132,7 @@ public class ConstructionCrane : MonoBehaviour
                 Collider buildingCollider = CurrentBuilding.GetComponent<Collider>();
                 Vector3 mousePoint = hit.point;
 
-                if (buildingCollider && ResourcesInStoke && ResourcesInStoke.StackSize > 0)
+                if (buildingCollider && (ResourcesInStoke && ResourcesInStoke.StackSize > 0 || !ResourcesInStoke))
                 {
                     mousePoint.y += buildingCollider.bounds.size.y / 2;
 
@@ -124,7 +143,10 @@ public class ConstructionCrane : MonoBehaviour
                     CurrentBuilding = null;
                     LockedThing = false;
 
-                    ResourcesInStoke.StackSize -= 1;
+                    if (ResourcesInStoke)
+                    {
+                        ResourcesInStoke.StackSize -= 1;
+                    }
                 }
             }
         }

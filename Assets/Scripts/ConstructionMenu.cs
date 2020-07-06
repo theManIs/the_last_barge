@@ -3,12 +3,15 @@ using System.Collections.Generic;
 using Assets.Scripts;
 using Assets.Scripts.Constructions.ConstructionCrane;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ConstructionMenu : MonoBehaviour
 {
     public RectTransform StructurePanel;
     public int ComfortFramesBlock = 30;
     public Camera WorldCamera;
+    public Button[] ConstructionsList;
+    public CraneBridgeProxy CraneBridgeProxy;
 
     private Vector2 _mousePosition;
     private FrameLocker _fl = new FrameLocker();
@@ -24,6 +27,12 @@ public class ConstructionMenu : MonoBehaviour
 
         _fl.LockFrames = ComfortFramesBlock;
         _ccm.WorldCamera = WorldCamera;
+
+
+        for (int i = 0; i < ConstructionsList.Length; i++)
+        {
+            ConstructionsList[i].onClick.AddListener(ClickTheButton);
+        }
     }
 
     // Update is called once per frame
@@ -34,7 +43,6 @@ public class ConstructionMenu : MonoBehaviour
 //            StructurePanel.gameObject.SetActive(false);
 //            _fl.StartLock();
 //        }
-
 //        else 
         if (Input.GetKey(KeyCode.Mouse1) && StructurePanel && !StructurePanel.gameObject.activeSelf && _fl.CheckFrame()) 
         {
@@ -43,6 +51,7 @@ public class ConstructionMenu : MonoBehaviour
                 if (hit.transform.gameObject.layer == LayerMask.NameToLayer("BuildingZone"))
                 {
                     StructurePanel.position = Input.mousePosition;
+                    CraneBridgeProxy.MousePosition = Input.mousePosition;
 
                     StructurePanel.gameObject.SetActive(true);
                     _fl.StartLock();
@@ -59,10 +68,14 @@ public class ConstructionMenu : MonoBehaviour
         _fl.RefineFrame();
     }
 
-    public void ClickTheButton(int buttonNumber)
+    public void ClickTheButton()
     {
+        StructurePanel.gameObject.SetActive(false);
         
-
-        
+        if (CraneBridgeProxy)
+        {
+            CraneBridgeProxy.BuildingNumber = 0;
+            CraneBridgeProxy.StartBuilding = true;
+        }
     }
 }
