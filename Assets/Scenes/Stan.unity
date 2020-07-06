@@ -455,6 +455,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: CanvasWorldMap
       objectReference: {fileID: 0}
+    - target: {fileID: 2200885789115388803, guid: 31f99d06706cb6f4d9c375ed340e7526,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7297458348548819579, guid: 31f99d06706cb6f4d9c375ed340e7526,
         type: 3}
       propertyPath: m_Camera
