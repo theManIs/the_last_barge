@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Assets.Scripts;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
 
 public class MapRandomizer : MonoBehaviour
@@ -20,6 +21,8 @@ public class MapRandomizer : MonoBehaviour
     public float ClosestToPoint = 0.25f;
     public Camera MainlineCamera;
     public float CameraSpeed = 0.1f;
+    public PointOfInterest OverPoint;
+    public PointOfInterest HoverPoint;
 
     protected float MapExtentX;
     protected float MapExtentY;
@@ -31,6 +34,7 @@ public class MapRandomizer : MonoBehaviour
     protected float MapCameraMaxY;
     protected float MapCameraMinX;
     protected float MapCameraMaxX;
+    protected bool TransportAwaits = false;
 
     #endregion
 
@@ -96,15 +100,51 @@ public class MapRandomizer : MonoBehaviour
                 if (closestDistanceToPoint > ClosestToPoint * ClosestToPoint)
                 {
                     RubbishGauge.GetComponent<RubbishGauge>().EngageGauge = true;
+                    TransportAwaits = true;
                 }
                 else
                 {
                     RubbishGauge.GetComponent<RubbishGauge>().EngageGauge = false;
+
+                    if (TransportAwaits)
+                    {
+                        LoadScene();
+
+                        TransportAwaits = false;
+                    }
                 }
             }
         }
 
+
         MoveCamera();
+
+        if (Input.GetKey(KeyCode.Mouse1))
+        {
+            OnRightMouse();
+        } 
+    }
+
+    protected void OnRightMouse()
+    {
+        if (HoverPoint)
+        {
+            HoverPoint.OnMouseExit();
+        }
+
+        if (OverPoint)
+        {
+            OverPoint.DeactivateConfirm();
+            OverPoint.OnMouseExit();
+        }
+    }
+
+    protected void LoadScene()
+    {
+        if (OverPoint)
+        {
+            SceneManager.LoadScene(OverPoint.SceneToLoad);
+        }
     }
 
     protected void MoveCamera()
