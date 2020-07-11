@@ -121,6 +121,87 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!114 &5660262 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1999920203, guid: 84efe594a339d0c4ba916d9123b84d54,
+    type: 3}
+  m_PrefabInstance: {fileID: 537385566}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54fad4e5c04e9584abbec3b6c797df1f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1001 &537385566
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 384821495537205657, guid: 84efe594a339d0c4ba916d9123b84d54,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 384821495537205657, guid: 84efe594a339d0c4ba916d9123b84d54,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 384821495537205657, guid: 84efe594a339d0c4ba916d9123b84d54,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 384821495537205657, guid: 84efe594a339d0c4ba916d9123b84d54,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 384821495537205657, guid: 84efe594a339d0c4ba916d9123b84d54,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 384821495537205657, guid: 84efe594a339d0c4ba916d9123b84d54,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 384821495537205657, guid: 84efe594a339d0c4ba916d9123b84d54,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 384821495537205657, guid: 84efe594a339d0c4ba916d9123b84d54,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 384821495537205657, guid: 84efe594a339d0c4ba916d9123b84d54,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 384821495537205657, guid: 84efe594a339d0c4ba916d9123b84d54,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 384821495537205657, guid: 84efe594a339d0c4ba916d9123b84d54,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8381229578169767826, guid: 84efe594a339d0c4ba916d9123b84d54,
+        type: 3}
+      propertyPath: m_Name
+      value: KineticEnergyBar
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 84efe594a339d0c4ba916d9123b84d54, type: 3}
 --- !u!1 &1051041616
 GameObject:
   m_ObjectHideFlags: 0
@@ -588,11 +669,21 @@ PrefabInstance:
       propertyPath: CentralBarge
       value: 
       objectReference: {fileID: 1146514248}
+    - target: {fileID: 6257111530076731118, guid: ddb240bb1604e0b4b8f8fe7edaf4aeca,
+        type: 3}
+      propertyPath: KineticEnergyBarProxy
+      value: 
+      objectReference: {fileID: 5660262}
     - target: {fileID: 7743590335317375195, guid: ddb240bb1604e0b4b8f8fe7edaf4aeca,
         type: 3}
       propertyPath: WorldCamera
       value: 
       objectReference: {fileID: 1886033469}
+    - target: {fileID: 7743590335317375196, guid: ddb240bb1604e0b4b8f8fe7edaf4aeca,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8779336099591308147, guid: ddb240bb1604e0b4b8f8fe7edaf4aeca,
         type: 3}
       propertyPath: m_LocalPosition.x

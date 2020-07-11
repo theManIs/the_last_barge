@@ -15,6 +15,9 @@ public class ConstructionCrane : MonoBehaviour
     public Transform CentralBarge;
     public ResourceStack ResourcesInStoke;
     public CraneBridgeProxy CraneBridgeProxy;
+    public KineticEnergyBarProxy KineticEnergyBarProxy;
+    [Range(1, 6)]
+    public int AmountOfKineticEnergy = 3;
 
     private int _frameLockerSoft = 0;
     private int _frameLockerHard = 25;
@@ -69,8 +72,14 @@ public class ConstructionCrane : MonoBehaviour
 
         ActualPosition();
         CanBeBuilt();
+        DisplayKineticEnergy();
 
         _frameLockerSoft--;
+    }
+
+    protected void DisplayKineticEnergy()
+    {
+        KineticEnergyBarProxy?.HighlightBlocks(AmountOfKineticEnergy);
     }
 
     protected void CanBeBuilt()
@@ -80,7 +89,7 @@ public class ConstructionCrane : MonoBehaviour
             _canBuild = _ccm.CanBeBuilt(CurrentBuilding);
             _canBuild = !_ccm.DoesTouchTheBarge(CentralBarge, CurrentBuilding) && _canBuild;
             _canBuild = _ccm.DoesTouchBuildingZone(LayerMask.NameToLayer("BuildingZone")) && _canBuild;
-            _canBuild = (ResourcesInStoke && ResourcesInStoke.StackSize > 0 || !ResourcesInStoke) && _canBuild;
+            _canBuild = AmountOfKineticEnergy > 0 && _canBuild;
             
             if (!_canBuild && BadConstructionMaterial)
             {
@@ -143,10 +152,7 @@ public class ConstructionCrane : MonoBehaviour
                     CurrentBuilding = null;
                     LockedThing = false;
 
-                    if (ResourcesInStoke)
-                    {
-                        ResourcesInStoke.StackSize -= 1;
-                    }
+                    AmountOfKineticEnergy -= 1;
                 }
             }
         }
