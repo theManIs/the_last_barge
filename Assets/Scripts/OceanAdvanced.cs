@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.Experimental.GlobalIllumination;
 
 public class OceanAdvanced : MonoBehaviour
 {
@@ -45,8 +46,14 @@ public class OceanAdvanced : MonoBehaviour
 
   void Awake()
   {
+      if (!sun)
+      {
+          sun = FindObjectOfType<Light>();
+      }
+
     Vector4[] v_waves = new Vector4[NB_WAVE];
     Vector4[] v_waves_dir = new Vector4[NB_WAVE];
+
     for (int i = 0; i < NB_WAVE; i++)
     {
       v_waves[i] = new Vector4(waves[i].frequency, waves[i].amplitude, waves[i].phase, waves[i].sharpness);
@@ -58,6 +65,7 @@ public class OceanAdvanced : MonoBehaviour
 
     for (int i = 0; i < NB_INTERACTIONS; i++)
       interactions[i].w = 500.0F;
+
     ocean.SetVectorArray("interactions", interactions);
     ocean.SetVector("world_light_dir", -sun.transform.forward);
   }
