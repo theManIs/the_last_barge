@@ -6,8 +6,6 @@ using UnityEngine;
 public class ConstructionCrane : MonoBehaviour
 {
     public Camera WorldCamera;
-    public Transform[] AvailableBuildings;
-    public string TargetObjectName = "RaiderHub";
     public bool LockedThing = false;
     public Transform CurrentBuilding;
     public Material ConstructionMaterial;
@@ -16,8 +14,8 @@ public class ConstructionCrane : MonoBehaviour
     public ResourceStack ResourcesInStoke;
     public CraneBridgeProxy CraneBridgeProxy;
     public KineticEnergyBarProxy KineticEnergyBarProxy;
-    [Range(1, 6)]
     public int AmountOfKineticEnergy = 3;
+    public int BuildCloseDistance = 10;
 
     private int _frameLockerSoft = 0;
     private int _frameLockerHard = 25;
@@ -31,6 +29,7 @@ public class ConstructionCrane : MonoBehaviour
         {
             _ccm = new ConstructionCraneModel();
             _ccm.WorldCamera = WorldCamera;
+            _ccm.BuildCloseDistance = BuildCloseDistance;
         }
     }
 
@@ -45,10 +44,12 @@ public class ConstructionCrane : MonoBehaviour
             {
 //                Debug.Log(hit.transform.name);
 
-                if (AvailableBuildings.Length > 0)
+//                if (AvailableBuildings.Length > 0)
+                if (CraneBridgeProxy.AvailableBuilding)
                 {
                     LockedThing = true;
-                    CurrentBuilding = _ccm.SpawnBuilding(AvailableBuildings[0]);
+//                    CurrentBuilding = _ccm.SpawnBuilding(AvailableBuildings[0]);
+                    CurrentBuilding = _ccm.SpawnBuilding(CraneBridgeProxy.AvailableBuilding);
 
                     ApplyLayer(CurrentBuilding, 2);
                 }
@@ -145,7 +146,7 @@ public class ConstructionCrane : MonoBehaviour
                 {
                     mousePoint.y += buildingCollider.bounds.size.y / 2;
 
-                    Instantiate(AvailableBuildings[0], mousePoint, Quaternion.identity);
+                    Instantiate(CraneBridgeProxy.AvailableBuilding, mousePoint, Quaternion.identity);
 
                     Destroy(CurrentBuilding.gameObject);
 

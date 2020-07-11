@@ -1,8 +1,10 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using Assets.Scripts;
 using Assets.Scripts.Constructions.ConstructionCrane;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class ConstructionMenu : MonoBehaviour
@@ -12,6 +14,7 @@ public class ConstructionMenu : MonoBehaviour
     public Camera WorldCamera;
     public Button[] ConstructionsList;
     public CraneBridgeProxy CraneBridgeProxy;
+    public Transform[] ConstructionPrefabs;
 
     private Vector2 _mousePosition;
     private FrameLocker _fl = new FrameLocker();
@@ -31,7 +34,7 @@ public class ConstructionMenu : MonoBehaviour
 
         for (int i = 0; i < ConstructionsList.Length; i++)
         {
-            ConstructionsList[i].onClick.AddListener(ClickTheButton);
+            ConstructionsList[i].onClick.AddListener(ClickTheButton(i));
         }
     }
 
@@ -68,14 +71,18 @@ public class ConstructionMenu : MonoBehaviour
         _fl.RefineFrame();
     }
 
-    public void ClickTheButton()
+    public UnityAction ClickTheButton(int number)
     {
-        StructurePanel.gameObject.SetActive(false);
-        
-        if (CraneBridgeProxy)
+        return () =>
         {
-            CraneBridgeProxy.BuildingNumber = 0;
-            CraneBridgeProxy.StartBuilding = true;
-        }
+            StructurePanel.gameObject.SetActive(false);
+
+            if (CraneBridgeProxy)
+            {
+                CraneBridgeProxy.BuildingNumber = number;
+                CraneBridgeProxy.AvailableBuilding = ConstructionPrefabs[CraneBridgeProxy.BuildingNumber];
+                CraneBridgeProxy.StartBuilding = true;
+            }
+        };
     }
 }
