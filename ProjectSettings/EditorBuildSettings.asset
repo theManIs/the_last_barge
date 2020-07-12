@@ -11,4 +11,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/CampaingMap.unity
     guid: d364a984e363c3843bdfb8c9be56c038
+  - enabled: 1
+    path: Assets/Scenes/DeadReaider.unity
+    guid: 45557f3b434316e4e918eeec7b77b19b
   m_configObjects: {}

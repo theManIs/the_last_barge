@@ -5,6 +5,7 @@ namespace Assets.Scripts.Constructions.ConstructionCrane
     public class ConstructionCraneModel
     {
         public Camera WorldCamera;
+        public int BuildCloseDistance = 10;
 
         public Transform SpawnBuilding(Transform buildingToBuild)
         {
@@ -73,7 +74,7 @@ namespace Assets.Scripts.Constructions.ConstructionCrane
                 Vector3 closestPoint = someCollider.ClosestPoint(botCenter);
 
 //                Debug.Log(closestPoint + " " + Mathf.Abs(Vector3.Distance(botCenter, closestPoint)));
-                if (Mathf.Abs(Vector3.Distance(botCenter, closestPoint)) < 10)
+                if (Mathf.Abs(Vector3.Distance(botCenter, closestPoint)) < BuildCloseDistance)
                 {
                     return true;
                 }
