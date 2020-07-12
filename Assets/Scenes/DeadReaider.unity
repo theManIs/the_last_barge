@@ -1189,7 +1189,8 @@ PrefabInstance:
       propertyPath: m_Text
       value: "\u0425\u043E\u0440\u043E\u0448\u0430 \u043F\u0440\u043E\u0442\u0438\u0432
         \u0410\u0440\u0442\u0435\u043C\u0430\n\u0421\u0440\u0435\u0434\u043D\u0435
-        \u043F\u0440\u043E\u0442\u0438\u0432 \u0421\u0442\u0430\u0441\u0430"
+        \u043F\u0440\u043E\u0442\u0438\u0432 \u0421\u0442\u0430\u0441\u0430\n\u041F\u043B\u043E\u0445\u0430
+        \u043F\u0440\u043E\u0442\u0438\u0432 \u0410\u0440\u0442\u0443\u0440\u0430"
       objectReference: {fileID: 0}
     - target: {fileID: 4397733307373249513, guid: 7929ca1d657a01342ad21fddcd58e109,
         type: 3}
