@@ -16,6 +16,7 @@ public class ConstructionCrane : MonoBehaviour
     public KineticEnergyBarProxy KineticEnergyBarProxy;
     public int AmountOfKineticEnergy = 3;
     public int BuildCloseDistance = 10;
+    public float SpawnShiftY = 4;
 
     private int _frameLockerSoft = 0;
     private int _frameLockerHard = 25;
@@ -144,7 +145,7 @@ public class ConstructionCrane : MonoBehaviour
 
                 if (buildingCollider && (ResourcesInStoke && ResourcesInStoke.StackSize > 0 || !ResourcesInStoke))
                 {
-                    mousePoint.y += buildingCollider.bounds.size.y / 2;
+                    mousePoint.y += buildingCollider.bounds.size.y / 2 - SpawnShiftY;
 
                     Instantiate(CraneBridgeProxy.AvailableBuilding, mousePoint, Quaternion.identity);
 

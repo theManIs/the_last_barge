@@ -42,7 +42,7 @@ PrefabInstance:
     - target: {fileID: 2124591826502235074, guid: fce769e1c8e47154ea14c87c289a6c6f,
         type: 3}
       propertyPath: m_Name
-      value: CraneBridge
+      value: CraneBridgeProxy
       objectReference: {fileID: 0}
     - target: {fileID: 7382502303975176970, guid: fce769e1c8e47154ea14c87c289a6c6f,
         type: 3}
@@ -146,6 +146,16 @@ PrefabInstance:
       propertyPath: CraneBridgeProxy
       value: 
       objectReference: {fileID: 627589615999662233}
+    - target: {fileID: 4290224878051562915, guid: 67fe2b0872c7a614ea20f8c4234570b5,
+        type: 3}
+      propertyPath: BuildCloseDistance
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 4290224878051562915, guid: 67fe2b0872c7a614ea20f8c4234570b5,
+        type: 3}
+      propertyPath: SpawnShiftY
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 4290224878051562916, guid: 67fe2b0872c7a614ea20f8c4234570b5,
         type: 3}
       propertyPath: m_LocalPosition.x

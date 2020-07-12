@@ -44,9 +44,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   WorldCamera: {fileID: 0}
-  AvailableBuildings:
-  - {fileID: 1380432746831047343, guid: f52828641954bb6488858b43d61b3b50, type: 3}
-  TargetObjectName: Plane
   LockedThing: 0
   CurrentBuilding: {fileID: 0}
   ConstructionMaterial: {fileID: 2100000, guid: 32a76832b79e84347ad9df08b12709c3,
@@ -54,3 +51,9 @@ MonoBehaviour:
   BadConstructionMaterial: {fileID: 2100000, guid: bd5ddf23fa34b854e9ea218943c30c2f,
     type: 2}
   CentralBarge: {fileID: 0}
+  ResourcesInStoke: {fileID: 0}
+  CraneBridgeProxy: {fileID: 0}
+  KineticEnergyBarProxy: {fileID: 0}
+  AmountOfKineticEnergy: 3
+  BuildCloseDistance: 30
+  SpawnShiftY: 2
