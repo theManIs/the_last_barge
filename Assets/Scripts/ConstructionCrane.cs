@@ -6,14 +6,17 @@ using UnityEngine;
 public class ConstructionCrane : MonoBehaviour
 {
     public Camera WorldCamera;
-    public Transform[] AvailableBuildings;
-    public string TargetObjectName = "RaiderHub";
     public bool LockedThing = false;
     public Transform CurrentBuilding;
     public Material ConstructionMaterial;
     public Material BadConstructionMaterial;
     public Transform CentralBarge;
     public ResourceStack ResourcesInStoke;
+    public CraneBridgeProxy CraneBridgeProxy;
+    public KineticEnergyBarProxy KineticEnergyBarProxy;
+    public int AmountOfKineticEnergy = 3;
+    public int BuildCloseDistance = 10;
+    public float SpawnShiftY = 4;
 
     private int _frameLockerSoft = 0;
     private int _frameLockerHard = 25;
@@ -27,30 +30,40 @@ public class ConstructionCrane : MonoBehaviour
         {
             _ccm = new ConstructionCraneModel();
             _ccm.WorldCamera = WorldCamera;
+            _ccm.BuildCloseDistance = BuildCloseDistance;
         }
     }
 
     // Update is called once per frame
     void Update()
     {
-//        if (Input.GetKey(KeyCode.Mouse0) && _frameLockerSoft < 0)
-//        {
-//            if (CastRayFromScreen(out RaycastHit hit) && hit.transform.name == TargetObjectName && !LockedThing)
-//            {
-////                Debug.Log(hit.transform.name);
-//
+        if (CraneBridgeProxy && CraneBridgeProxy.StartBuilding && _frameLockerSoft < 0)
+        {
+            CraneBridgeProxy.StartBuilding = false;
+
+            if (CastRayFromScreen(out RaycastHit hit) && !LockedThing)
+            {
+//                Debug.Log(hit.transform.name);
+
 //                if (AvailableBuildings.Length > 0)
-//                {
-//                    LockedThing = true;
+                if (CraneBridgeProxy.AvailableBuilding)
+                {
+                    LockedThing = true;
 //                    CurrentBuilding = _ccm.SpawnBuilding(AvailableBuildings[0]);
-//
-//                    ApplyLayer(CurrentBuilding, 2);
-//                }
-////                SpawnBuilding();
-//
-//                _frameLockerSoft = _frameLockerHard;
-//            }
-//        }
+                    CurrentBuilding = _ccm.SpawnBuilding(CraneBridgeProxy.AvailableBuilding);
+
+                    ApplyLayer(CurrentBuilding, 2);
+                }
+//                SpawnBuilding();
+
+                _frameLockerSoft = _frameLockerHard;
+            }
+        }
+
+        if (Input.GetKey(KeyCode.Mouse1))
+        {
+            RefuseBuild();
+        }
 
         if (Input.GetKey(KeyCode.Mouse0) && LockedThing && _frameLockerSoft < 0)
         {
@@ -61,8 +74,14 @@ public class ConstructionCrane : MonoBehaviour
 
         ActualPosition();
         CanBeBuilt();
+        DisplayKineticEnergy();
 
         _frameLockerSoft--;
+    }
+
+    protected void DisplayKineticEnergy()
+    {
+        KineticEnergyBarProxy?.HighlightBlocks(AmountOfKineticEnergy);
     }
 
     protected void CanBeBuilt()
@@ -72,7 +91,7 @@ public class ConstructionCrane : MonoBehaviour
             _canBuild = _ccm.CanBeBuilt(CurrentBuilding);
             _canBuild = !_ccm.DoesTouchTheBarge(CentralBarge, CurrentBuilding) && _canBuild;
             _canBuild = _ccm.DoesTouchBuildingZone(LayerMask.NameToLayer("BuildingZone")) && _canBuild;
-            _canBuild = ResourcesInStoke && ResourcesInStoke.StackSize > 0 && _canBuild;
+            _canBuild = AmountOfKineticEnergy > 0 && _canBuild;
             
             if (!_canBuild && BadConstructionMaterial)
             {
@@ -104,6 +123,17 @@ public class ConstructionCrane : MonoBehaviour
         }
     }
 
+    protected void RefuseBuild()
+    {
+        if (CurrentBuilding && CurrentBuilding.gameObject)
+        {
+            Destroy(CurrentBuilding.gameObject);
+        }
+
+        CurrentBuilding = null;
+        LockedThing = false;
+    }
+
     protected void BuildOne()
     {
         if (_canBuild)
@@ -113,18 +143,18 @@ public class ConstructionCrane : MonoBehaviour
                 Collider buildingCollider = CurrentBuilding.GetComponent<Collider>();
                 Vector3 mousePoint = hit.point;
 
-                if (buildingCollider && ResourcesInStoke && ResourcesInStoke.StackSize > 0)
+                if (buildingCollider && (ResourcesInStoke && ResourcesInStoke.StackSize > 0 || !ResourcesInStoke))
                 {
-                    mousePoint.y += buildingCollider.bounds.size.y / 2;
+                    mousePoint.y += buildingCollider.bounds.size.y / 2 - SpawnShiftY;
 
-                    Instantiate(AvailableBuildings[0], mousePoint, Quaternion.identity);
+                    Instantiate(CraneBridgeProxy.AvailableBuilding, mousePoint, Quaternion.identity);
 
                     Destroy(CurrentBuilding.gameObject);
 
                     CurrentBuilding = null;
                     LockedThing = false;
 
-                    ResourcesInStoke.StackSize -= 1;
+                    AmountOfKineticEnergy -= 1;
                 }
             }
         }

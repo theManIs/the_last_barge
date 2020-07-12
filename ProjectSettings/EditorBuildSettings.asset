@@ -6,6 +6,12 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/TowerDefence.unity
-    guid: 9fc0d4010bbf28b4594072e72b8655ab
+    path: Assets/Scenes/BuildingScene.unity
+    guid: 7b6253d4867ed6a4a9c3795e0840c52f
+  - enabled: 1
+    path: Assets/Scenes/CampaingMap.unity
+    guid: d364a984e363c3843bdfb8c9be56c038
+  - enabled: 1
+    path: Assets/Scenes/DeadReaider.unity
+    guid: 45557f3b434316e4e918eeec7b77b19b
   m_configObjects: {}
