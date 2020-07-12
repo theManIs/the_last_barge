@@ -10,6 +10,8 @@ public class MedievalCannon : MonoBehaviour
     public string FirePointPath = "FirePoint";
     public string VerticalRotationBlock = "IronCannon";
     public string HorizontalRotationBlock = "GunCarriage";
+    public SpriteRenderer CannonRangeCircle;
+    public float CircleError = 1.2f;
 
 
     [Header("BarrelEffectiveness")]
@@ -26,6 +28,7 @@ public class MedievalCannon : MonoBehaviour
     private Transform _horizontalBlock;
     private Transform _verticalBlock;
     private NavyBrig _navalTarget;
+    private Vector3 _oneUnit;
 
 
     // Start is called before the first frame update
@@ -36,6 +39,40 @@ public class MedievalCannon : MonoBehaviour
         _horizontalBlock = transform.Find(HorizontalRotationBlock);
         _verticalBlock = transform.Find(VerticalRotationBlock);
         _firePoint = _firePoint ? _firePoint : transform;
+
+        RescaleEffectiveRange();
+    }
+
+    protected void RescaleEffectiveRange()
+    {
+        if (CannonRangeCircle)
+        {
+            _oneUnit = CannonRangeCircle.gameObject.transform.localScale;
+            Vector3 start = CannonRangeCircle.bounds.max;
+            start.x = CannonRangeCircle.bounds.center.x;
+
+            //            Debug.Log(start);
+
+            for (int i = 0; i < 100; i++)
+            {
+                CannonRangeCircle.gameObject.transform.localScale = _oneUnit * i;
+
+                Vector3 end = CannonRangeCircle.bounds.max;
+                end.x = CannonRangeCircle.bounds.center.x;
+
+//                Debug.Log(Vector3.Distance(end, start));
+
+                if (Vector3.Distance(end, start) > (EffectiveDistance * CircleError))
+                {
+                    break;
+                }
+            }
+
+//            CannonRangeCircle.gameObject.transform.localScale = _oneUnit * EffectiveDistance;
+
+//            Debug.Log(end);
+//            Debug.Log(Vector3.Distance(end, start));
+        }
     }
 
     // Update is called once per frame

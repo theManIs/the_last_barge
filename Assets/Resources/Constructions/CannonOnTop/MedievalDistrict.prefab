@@ -98,6 +98,8 @@ MonoBehaviour:
   FirePointPath: GunCarriage/IronCannon/FirePoint
   VerticalRotationBlock: GunCarriage/IronCannon
   HorizontalRotationBlock: GunCarriage
+  CannonRangeCircle: {fileID: 1066271433584537394}
+  CircleError: 1.2
   ShellDestruction: 3
   ProjectileForce: 25
   EffectiveDistance: 100
@@ -368,7 +370,7 @@ Transform:
   m_GameObject: {fileID: 7921716630650447636}
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.1, y: 0.1, z: 1}
   m_Children: []
   m_Father: {fileID: 4747211227859146728}
   m_RootOrder: 0
