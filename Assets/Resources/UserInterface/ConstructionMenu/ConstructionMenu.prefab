@@ -572,6 +572,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   StructurePanel: {fileID: 4397733309024539276}
+  StructureInfo: {fileID: 183482971384709367}
   ComfortFramesBlock: 30
   WorldCamera: {fileID: 0}
   ConstructionsList:
