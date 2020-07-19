@@ -1191,21 +1191,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: CursorObject
       objectReference: {fileID: 0}
-    - target: {fileID: 2966515498997527695, guid: c0b68c023f0e5074d87c24b477f1372c,
-        type: 3}
-      propertyPath: DismantleCursor
-      value: 
-      objectReference: {fileID: 2800000, guid: 9fba4e04c5a2ae247a2d5435314b58e7, type: 3}
-    - target: {fileID: 2966515498997527695, guid: c0b68c023f0e5074d87c24b477f1372c,
-        type: 3}
-      propertyPath: RepairCursor
-      value: 
-      objectReference: {fileID: 2800000, guid: 09c89b0a69b38a348ba98ad749e02f72, type: 3}
-    - target: {fileID: 2966515498997527695, guid: c0b68c023f0e5074d87c24b477f1372c,
-        type: 3}
-      propertyPath: DefaultCursor
-      value: 
-      objectReference: {fileID: 2800000, guid: 16613d7f0d9c0144ca336f3a44c989e4, type: 3}
     - target: {fileID: 6413679314834647318, guid: c0b68c023f0e5074d87c24b477f1372c,
         type: 3}
       propertyPath: m_LocalPosition.x
