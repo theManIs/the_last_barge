@@ -40,6 +40,7 @@ public class ConstructionCrane : MonoBehaviour
         if (CraneBridgeProxy && CraneBridgeProxy.StartBuilding && _frameLockerSoft < 0)
         {
             CraneBridgeProxy.StartBuilding = false;
+            CraneBridgeProxy.BuildingInProgress = true;
 
             if (CastRayFromScreen(out RaycastHit hit) && !LockedThing)
             {
@@ -132,6 +133,7 @@ public class ConstructionCrane : MonoBehaviour
 
         CurrentBuilding = null;
         LockedThing = false;
+        CraneBridgeProxy.BuildingInProgress = false;
     }
 
     protected void BuildOne()
@@ -155,6 +157,7 @@ public class ConstructionCrane : MonoBehaviour
                     LockedThing = false;
 
                     AmountOfKineticEnergy -= 1;
+                    CraneBridgeProxy.BuildingInProgress = false;
                 }
             }
         }
