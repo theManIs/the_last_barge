@@ -10,6 +10,7 @@ using UnityEngine.UI;
 public class ConstructionMenu : MonoBehaviour
 {
     public RectTransform StructurePanel;
+    public RectTransform StructureInfo;
     public int ComfortFramesBlock = 30;
     public Camera WorldCamera;
     public Button[] ConstructionsList;
@@ -23,10 +24,8 @@ public class ConstructionMenu : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if (StructurePanel)
-        {
-            StructurePanel.gameObject.SetActive(false);
-        }
+        StructurePanel?.gameObject.SetActive(false);
+        StructureInfo?.gameObject.SetActive(false);
 
         _fl.LockFrames = ComfortFramesBlock;
         _ccm.WorldCamera = WorldCamera;

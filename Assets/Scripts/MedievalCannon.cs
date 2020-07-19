@@ -10,7 +10,7 @@ public class MedievalCannon : MonoBehaviour
     public string FirePointPath = "FirePoint";
     public string VerticalRotationBlock = "IronCannon";
     public string HorizontalRotationBlock = "GunCarriage";
-    public SpriteRenderer CannonRangeCircle;
+    public MeshRenderer CannonRangeCircle;
     public float CircleError = 1.2f;
 
 

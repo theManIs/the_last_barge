@@ -36,7 +36,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 479.4, y: 429.2}
+  m_AnchoredPosition: {x: -517, y: 190}
   m_SizeDelta: {x: -1665.1, y: -858.4}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8530310460207897100
@@ -84,8 +84,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8530310460852047575}
+  - component: {fileID: 731344409}
   m_Layer: 0
-  m_Name: Enemy
+  m_Name: EnemyIndicator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -106,6 +107,25 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &731344409
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8530310460852047576}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74337fe6d0676c04fbe92a84bb114444, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  FollowingEnemy: {fileID: 0}
+  FollowingEnemies: []
+  ApproximationPoint: {fileID: 0}
+  IndicatorPanel: {fileID: 8530310460207897102}
+  WorldCamera: {fileID: 0}
+  GameObjectToInstantiate: {fileID: 1123231592148756, guid: 5ac421d7e8cea0447b1108e7955c0ed6,
+    type: 3}
 --- !u!1 &8530310461063132881
 GameObject:
   m_ObjectHideFlags: 0
@@ -164,7 +184,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 2
   m_TargetDisplay: 0
 --- !u!114 &8530310461063132878
 MonoBehaviour:
