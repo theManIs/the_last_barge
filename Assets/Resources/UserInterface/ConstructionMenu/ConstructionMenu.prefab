@@ -592,6 +592,8 @@ MonoBehaviour:
   - {fileID: 1380432746831047343, guid: f52828641954bb6488858b43d61b3b50, type: 3}
   - {fileID: 1380432746831047343, guid: f52828641954bb6488858b43d61b3b50, type: 3}
   - {fileID: 1380432746831047343, guid: f52828641954bb6488858b43d61b3b50, type: 3}
+  RepairButton: {fileID: 4404127571999318294}
+  DismantleButton: {fileID: 7994808919640663441}
 --- !u!1 &4397733307461755477
 GameObject:
   m_ObjectHideFlags: 0
