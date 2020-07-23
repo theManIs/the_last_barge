@@ -24,8 +24,8 @@ public class ConstructionMenu : MonoBehaviour
     private Vector2 _mousePosition;
     private FrameLocker _fl = new FrameLocker();
     private ConstructionCraneModel _ccm = new ConstructionCraneModel();
-    private bool _buildingInProgress = false;
     private CursorMasterMono _cmm;
+    private bool _buildingInProgress = false;
     private bool _repairInProgress = false;
     private bool _menuInProgress = false;
     private bool _dismantleInProgress = false;
