@@ -21,15 +21,10 @@ public class ConstructionMenu : MonoBehaviour
     public Button RepairButton;
     public Button DismantleButton;
 
-    private Vector2 _mousePosition;
     private FrameLocker _fl = new FrameLocker();
     private ConstructionCraneModel _ccm = new ConstructionCraneModel();
     private CursorMasterMono _cmm;
-    private ConstructionFlagsCapsule? _cfc;
-    private bool _buildingInProgress = false;
-    private bool _repairInProgress = false;
-    private bool _menuInProgress = false;
-    private bool _dismantleInProgress = false;
+    private ConstructionFlagsCapsule _cfc;
 
     #endregion
 
@@ -62,19 +57,20 @@ public class ConstructionMenu : MonoBehaviour
         DismantleButton?.onClick.AddListener(ClickDismantleButton);
 
         _cmm = FindObjectOfType<CursorMasterMono>();
-        _cfc = CraneBridgeProxy?.Cfc;
+        _cfc = CraneBridgeProxy ? CraneBridgeProxy.Cfc : new ConstructionFlagsCapsule();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (_menuInProgress && Input.GetKey(KeyCode.Mouse1) && _fl.CheckFrame())
+        if (_cfc.MenuInProgress && Input.GetKey(KeyCode.Mouse1) && _fl.CheckFrame())
         {
-            DeactivateMenus();
+            HideStructureInfo();
+            HideStructureMenu();
 
             _fl.StartLock();
         } 
-        else if (Input.GetKey(KeyCode.Mouse1) && !_repairInProgress && !CraneBridgeProxy.BuildingInProgress && _fl.CheckFrame()) 
+        else if (Input.GetKey(KeyCode.Mouse1) && !_cfc.RepairInProgress && !CraneBridgeProxy.BuildingInProgress && _fl.CheckFrame()) 
         {
             if (_ccm.CastAnyRayFromScreen(Input.mousePosition, out RaycastHit hit))
             {
@@ -82,7 +78,7 @@ public class ConstructionMenu : MonoBehaviour
                 {
                     StructurePanel.position = Input.mousePosition;
                     CraneBridgeProxy.MousePosition = Input.mousePosition;
-                    _menuInProgress = true;
+                    _cfc.MenuInProgress = true;
 
                     StructurePanel.gameObject.SetActive(true);
                     _fl.StartLock();
@@ -90,14 +86,7 @@ public class ConstructionMenu : MonoBehaviour
             }
         }
 
-        if (_buildingInProgress && !CraneBridgeProxy.StartBuilding && !CraneBridgeProxy.BuildingInProgress)
-        {
-            _buildingInProgress = false;
-
-            StructureInfo?.gameObject.SetActive(false);
-        }
-
-        ReleaseCursor();
+        ReleaseAllocation();
         _fl.RefineFrame();
     }
 
@@ -113,36 +102,55 @@ public class ConstructionMenu : MonoBehaviour
                 CraneBridgeProxy.BuildingNumber = number;
                 CraneBridgeProxy.AvailableBuilding = ConstructionPrefabs[CraneBridgeProxy.BuildingNumber];
                 CraneBridgeProxy.StartBuilding = true;
-                _buildingInProgress = true;
+                _cfc.BuildingInProgress = true;
             }
         };
     }
 
-    protected void DeactivateMenus()
+    protected void HideStructureInfo()
     {
-        StructurePanel?.gameObject.SetActive(false);
-        StructureInfo?.gameObject.SetActive(false);
+        _cfc.BuildingInProgress = false;
 
-        _menuInProgress = false;
+        StructureInfo?.gameObject.SetActive(false);
     }
 
-    protected void HideStructureMenu() => StructurePanel?.gameObject.SetActive(false);
-
-    protected void ReleaseCursor()
+    protected void HideStructureMenu()
     {
-        if (_repairInProgress && Input.GetKey(KeyCode.Mouse1))
+        _cfc.MenuInProgress = false;
+
+        StructurePanel?.gameObject.SetActive(false);
+    }
+
+    protected void ReleaseAllocation()
+    {
+        if (Input.GetKey(KeyCode.Mouse1))
+        {
+            if (_cfc.RepairInProgress)
+            {
+                _cfc.RepairInProgress = false;
+            }
+            else if (_cfc.DismantleInProgress)
+            {
+                _cfc.DismantleInProgress = false;
+            }
+        }
+
+        if (!_cfc.RepairInProgress && !_cfc.DismantleInProgress)
         {
             _cmm?.UseDefault();
-            _repairInProgress = false;
-        } 
-        else if (_dismantleInProgress && Input.GetKey(KeyCode.Mouse1))
+        }
+        else if (_cfc.DismantleInProgress)
         {
-            _cmm?.UseDefault();
-            _dismantleInProgress = false;
-        } 
-        else if (!_repairInProgress && !_dismantleInProgress)
+            _cmm?.UseDismantle();
+        }
+        else if (_cfc.RepairInProgress)
         {
-            _cmm?.UseDefault();
+            _cmm?.UseRepair();
+        }
+
+        if (_cfc.BuildingInProgress && !CraneBridgeProxy.StartBuilding && !CraneBridgeProxy.BuildingInProgress)
+        {
+            HideStructureInfo();
         }
     }
 
@@ -150,17 +158,13 @@ public class ConstructionMenu : MonoBehaviour
     {
         HideStructureMenu();
 
-        _cmm.UseRepair();
-
-        _repairInProgress = true;
+        _cfc.RepairInProgress = true;
     }
 
     public void ClickDismantleButton()
     {
         HideStructureMenu();
 
-        _cmm.UseDismantle();
-
-        _dismantleInProgress = true;
+        _cfc.DismantleInProgress = true;
     }
 }
