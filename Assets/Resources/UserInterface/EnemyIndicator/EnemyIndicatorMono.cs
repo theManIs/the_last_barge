@@ -12,22 +12,38 @@ public class EnemyIndicatorMono : MonoBehaviour
     public Camera WorldCamera;
     public GameObject GameObjectToInstantiate;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-    }
 
-    // Update is called once per frame
-    void Update()
+    #region UnityMethods
+
+    void Update() => UnityUpdate();
+
+    #endregion
+
+
+    #region Methods
+
+    protected void UnityUpdate()
     {
         NavyBrig nb = FindObjectOfType<NavyBrig>();
 
-        if (nb)
-        { 
+        if (nb && !EnemyInViewport(nb.transform))
+        {
             FollowingEnemy = nb.transform;
 
+            IndicatorPanel.gameObject.SetActive(true);
             RepositionIndicator();
         }
+        else
+        {
+            IndicatorPanel.gameObject.SetActive(false);
+        }
+    }
+
+    protected bool EnemyInViewport(Transform enemyTrans)
+    {
+        Vector3 viewportPos = Camera.main.WorldToViewportPoint(enemyTrans.position);
+
+        return (viewportPos.x < 1f && viewportPos.x > 0f) && (viewportPos.y < 1f && viewportPos.y > 0f);
     }
 
     protected void RepositionIndicator()
@@ -56,5 +72,7 @@ public class EnemyIndicatorMono : MonoBehaviour
         Vector3 enemyDirection = rotateCanvas - posCanvas;
         float angleY = Mathf.Atan2(enemyDirection.y, enemyDirection.x) * Mathf.Rad2Deg;
         IndicatorPanel.rotation = Quaternion.Euler(new Vector3(angleX, 0, angleY));
-    }
+    } 
+
+    #endregion
 }

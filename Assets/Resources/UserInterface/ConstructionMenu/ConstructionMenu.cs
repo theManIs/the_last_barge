@@ -25,6 +25,7 @@ public class ConstructionMenu : MonoBehaviour
     private FrameLocker _fl = new FrameLocker();
     private ConstructionCraneModel _ccm = new ConstructionCraneModel();
     private CursorMasterMono _cmm;
+    private ConstructionFlagsCapsule? _cfc;
     private bool _buildingInProgress = false;
     private bool _repairInProgress = false;
     private bool _menuInProgress = false;
@@ -61,6 +62,7 @@ public class ConstructionMenu : MonoBehaviour
         DismantleButton?.onClick.AddListener(ClickDismantleButton);
 
         _cmm = FindObjectOfType<CursorMasterMono>();
+        _cfc = CraneBridgeProxy?.Cfc;
     }
 
     // Update is called once per frame

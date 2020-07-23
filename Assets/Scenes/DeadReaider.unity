@@ -745,7 +745,7 @@ MonoBehaviour:
   AccelerationStep: 1
   SpawningCooldown: 10
   OverallEnemies: 5
-  BlinkCounter: {x: 10, y: 0, z: 10}
+  BlinkCounter: {x: 25, y: 0, z: 25}
 --- !u!4 &1321392129
 Transform:
   m_ObjectHideFlags: 0
